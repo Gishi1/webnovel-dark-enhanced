@@ -144,16 +144,23 @@ The `tools/` folder drives a real browser over the Chrome DevTools Protocol (Nod
 # Navigate, evaluate a check script, screenshot, print console errors
 node tools/verify.mjs <url> <check.js> <out.png> [waitMs]
 
+# Full audit across every supported page type (10 pages, exits non-zero on failures)
+./tools/audit.sh
+WNE_CLEAN=1 ./tools/audit.sh        # restart the test browser with a clean profile first
+
 # WCAG contrast audit of the current page
-node tools/verify.mjs <url> tools/contrast.js out.png
+VIEW_W=768 VIEW_H=1200 node tools/verify.mjs <url> tools/contrast.js out.png
 
 # Regenerate icons
 node tools/make-icons.mjs
 ```
 
 `tools/contrast.js` walks every visible text element, composites its background and reports WCAG AA
-failures. Current status across home, listings, book page and reader: only the site's own contest badge
-(`$50000`, 4.42:1) is below AA.
+failures. Current status across home, listings, search, book page and reader: only the site's own contest
+badge (`$50000`, 4.42:1) is below AA.
+
+`tools/audit.sh` records the current evidence for every page type: dark theme present, master switch on,
+no white panels, no cookie banner, and zero extension exceptions (latest run: 10/10 pages pass).
 
 ## Limitations
 
