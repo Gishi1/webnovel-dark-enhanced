@@ -55,10 +55,12 @@
 
   function parseRating(li) {
     const el = li.querySelector(
-      '.g_star_num small, .g_star_num, p.df.aic span, p.df.aic strong span, [class*="star_num"] small'
+      '.g_star_num small, .g_star_num, p.df.aic strong:first-child span, [class*="star_num"] small'
     );
     if (!el) return 0;
-    const match = U.normalizeText(el.textContent).match(/\b([0-5](?:\.\d{1,2})?)\b/);
+    // Require the element to hold only the number: "3,235 Chapters" must not
+    // be read as a rating of 3.
+    const match = U.normalizeText(el.textContent).match(/^([0-5](?:\.\d{1,2})?)$/);
     if (!match) return 0;
     const value = parseFloat(match[1]);
     return Number.isFinite(value) && value <= 5 ? value : 0;
@@ -177,8 +179,9 @@
       badge.setAttribute('aria-hidden', 'true');
       li.appendChild(badge);
     }
-    badge.textContent = `\u2605 ${score}`;
-    badge.dataset.score = String(score);
+    const label = `\u2605 ${score}`;
+    if (badge.textContent !== label) badge.textContent = label;
+    if (badge.dataset.score !== String(score)) badge.dataset.score = String(score);
   }
 
   function ensureHideButton(li, info, enabled) {
@@ -276,13 +279,13 @@
       filters.keywords.length +
       (Number(settings.listing.minRating) || 0);
     const text = filterBar.querySelector('.wne-filterbar__text');
-    if (!configured && hidden === 0) {
-      text.textContent = 'Filters are on: add tags, books or keywords to clean up this list.';
-      filterBar.dataset.state = 'idle';
-    } else {
-      text.textContent = `${hidden} of ${lastCount} books filtered on this page`;
-      filterBar.dataset.state = hidden ? 'active' : 'empty';
-    }
+    const idle = !configured && hidden === 0;
+    const message = idle
+      ? 'Filters are on: add tags, books or keywords to clean up this list.'
+      : `${hidden} of ${lastCount} books filtered on this page`;
+    if (text.textContent !== message) text.textContent = message;
+    const state = idle ? 'idle' : hidden ? 'active' : 'empty';
+    if (filterBar.dataset.state !== state) filterBar.dataset.state = state;
     filterBar.querySelector('[data-wne-reveal]').hidden = hidden === 0;
   }
 
@@ -356,14 +359,17 @@
       notice.className = 'wne-notice wne-ui';
       document.body.appendChild(notice);
     }
-    notice.innerHTML =
-      `<span>This author is on your block list: <strong>${U.escapeHtml(authorEl.textContent)}</strong></span>` +
-      '<button type="button" class="wne-notice__btn">Unblock</button>';
-    notice.querySelector('button').addEventListener('click', () => {
-      const current = WNE.settings.get();
-      const rest = current.filters.blockAuthors.filter((name) => name.toLowerCase() !== author);
-      WNE.settings.save({ filters: { blockAuthors: rest } });
-    });
+    if (notice.dataset.author !== author) {
+      notice.dataset.author = author;
+      notice.innerHTML =
+        `<span>This author is on your block list: <strong>${U.escapeHtml(authorEl.textContent)}</strong></span>` +
+        '<button type="button" class="wne-notice__btn">Unblock</button>';
+      notice.querySelector('button').addEventListener('click', () => {
+        const current = WNE.settings.get();
+        const rest = current.filters.blockAuthors.filter((name) => name.toLowerCase() !== author);
+        WNE.settings.save({ filters: { blockAuthors: rest } });
+      });
+    }
   }
 
   function refresh() {

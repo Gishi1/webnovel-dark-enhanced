@@ -65,17 +65,31 @@
     return JSON.parse(JSON.stringify(value));
   }
 
-  /** Deep merge plain objects; arrays and scalars are replaced. */
+  /** Deep merge plain objects; arrays and scalars are replaced.
+   *  Nulls are ignored and a value whose type contradicts the default is coerced
+   *  (or dropped) so a hand-edited/imported JSON file cannot break the UI. */
   function merge(base, patch) {
-    if (!patch || typeof patch !== 'object' || Array.isArray(patch)) return patch === undefined ? base : clone(patch);
+    if (patch === null || patch === undefined) return clone(base);
+    if (typeof patch !== 'object' || Array.isArray(patch)) return clone(patch);
     const out = clone(base);
     for (const key of Object.keys(patch)) {
       const value = patch[key];
-      if (value && typeof value === 'object' && !Array.isArray(value)) {
-        out[key] = merge(base && typeof base[key] === 'object' ? base[key] : {}, value);
-      } else if (value !== undefined) {
-        out[key] = Array.isArray(value) ? value.slice() : value;
+      if (value === null || value === undefined) continue;
+      if (Array.isArray(value)) {
+        out[key] = value.slice();
+        continue;
       }
+      if (typeof value === 'object') {
+        out[key] = merge(base && typeof base[key] === 'object' && !Array.isArray(base[key]) ? base[key] : {}, value);
+        continue;
+      }
+      if (base && base[key] !== undefined && typeof base[key] !== typeof value) {
+        if (typeof base[key] === 'number' && Number.isFinite(Number(value))) out[key] = Number(value);
+        else if (typeof base[key] === 'boolean') out[key] = Boolean(value);
+        else out[key] = clone(base[key]);
+        continue;
+      }
+      out[key] = value;
     }
     return out;
   }

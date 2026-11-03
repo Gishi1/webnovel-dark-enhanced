@@ -181,7 +181,7 @@
   }
 
   function changeFont(delta) {
-    const current = WNE.settings.get().reader.fontSize;
+    const current = Number(WNE.settings.get().reader.fontSize) || 19;
     const next = U.clamp(current + delta, 14, 30);
     if (next === current) return;
     WNE.settings.save({ reader: { fontSize: next } });

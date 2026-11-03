@@ -39,8 +39,9 @@
   function applyFlags(next) {
     settings = next;
     const root = document.documentElement;
+    const master = Boolean(next.enabled);
     for (const [key, flag] of Object.entries(FLAGS)) {
-      const enabled = Boolean(next.cleanup && next.cleanup[key]);
+      const enabled = master && Boolean(next.cleanup && next.cleanup[key]);
       root.classList.toggle(flag, enabled);
     }
   }
@@ -57,7 +58,7 @@
   }
 
   function cleanupNow() {
-    if (!settings || !settings.cleanup) return;
+    if (!settings || !settings.enabled || !settings.cleanup) return;
 
     if (settings.cleanup.cookieBanner) {
       for (const selector of SELECTORS.cookie) removeAll(selector);

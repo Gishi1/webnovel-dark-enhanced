@@ -61,8 +61,8 @@ function pageLabel(url) {
   try {
     const { pathname } = new URL(url);
     if (pathname === '/') return 'Home · webnovel.com';
-    if (/^\/book\/[^/]+\/[^/]+\/?$/.test(pathname)) return 'Reader · chapter page';
     if (/^\/book\/[^/]+\/catalog/.test(pathname)) return 'Chapter catalogue';
+    if (/^\/book\/[^/]+\/[^/]+\/?$/.test(pathname)) return 'Reader · chapter page';
     if (/^\/book\//.test(pathname)) return 'Book page';
     if (/^\/(stories|tags|ranking|search)/.test(pathname)) return 'Listing · ' + pathname;
     return 'webnovel.com · ' + pathname;

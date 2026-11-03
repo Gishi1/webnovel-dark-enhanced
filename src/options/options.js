@@ -43,10 +43,15 @@ function flashSaved(label) {
   savedTimer = setTimeout(() => pill.classList.remove('is-on'), 1400);
 }
 
+let pendingPatch = null;
+
 function queueSave(patch) {
+  pendingPatch = WNE.merge(pendingPatch || {}, patch);
   clearTimeout(saveTimer);
   saveTimer = setTimeout(async () => {
-    settings = await WNE.settings.save(patch);
+    const next = pendingPatch;
+    pendingPatch = null;
+    settings = await WNE.settings.save(next || {});
     flashSaved();
   }, 260);
 }
@@ -158,9 +163,7 @@ function render(current) {
   renderToggles(current);
   const active = document.activeElement;
   const editingChips = active && active.closest('[data-chips]');
-  const editingBooks = active && active.id === 'blockBooks';
   if (!editingChips) renderChipsAll(current);
-  if (editingBooks) $('#blockBooks').value = current.filters.blockBooks.join('\n');
 }
 
 /* --------------------------------------------------------------- mutations */
@@ -175,9 +178,11 @@ function normalizeTag(value) {
 }
 
 async function addValue(listPath, rawValue) {
-  const value = normalizeTag(rawValue);
-  if (!value) return;
   const key = listPath.split('.').pop();
+  const clean = String(rawValue || '').trim();
+  // Keywords and author names must keep their spaces: only tags are normalised.
+  const value = key === 'hideTags' || key === 'preferTags' ? normalizeTag(clean) : clean.toLowerCase();
+  if (!value) return;
   const current = WNE.settings.get();
   const list = current.filters[key];
   if (list.some((entry) => entry.toLowerCase() === value)) return;
@@ -320,8 +325,13 @@ function setupNavigation() {
   );
   for (const section of $$('section.panel')) observer.observe(section);
   if (location.hash) {
-    const target = document.querySelector(location.hash);
-    if (target) setTimeout(() => target.scrollIntoView(), 30);
+    try {
+      const id = decodeURIComponent(location.hash.slice(1));
+      const target = document.getElementById(id);
+      if (target) setTimeout(() => target.scrollIntoView(), 30);
+    } catch (_) {
+      /* ignore malformed hashes */
+    }
   }
 }
 

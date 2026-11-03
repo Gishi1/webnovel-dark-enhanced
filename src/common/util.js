@@ -53,8 +53,14 @@
     if (!href) return null;
     const match = String(href).match(/\/book\/([^/?#]+?)_(\d+)(?:[/?#]|$)/);
     if (!match) return null;
+    let slug = match[1];
+    try {
+      slug = decodeURIComponent(slug);
+    } catch (_) {
+      /* malformed percent sequences are kept verbatim */
+    }
     return {
-      slug: decodeURIComponent(match[1]).toLowerCase(),
+      slug: slug.toLowerCase(),
       id: match[2],
       path: String(href).split(/[?#]/)[0]
     };
