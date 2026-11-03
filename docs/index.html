@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WebNovel Dark &amp; Enhanced — dark theme, filters and a better reader for webnovel.com</title>
+<meta name="description" content="A free Chrome extension that adds a real dark theme, card listings, tag/book/author filters and a searchable table of contents to webnovel.com.">
+<link rel="canonical" href="https://gishi1.github.io/webnovel-dark-enhanced/">
+<link rel="icon" href="icon128.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="WebNovel Dark &amp; Enhanced">
+<meta property="og:description" content="Dark theme, card listings, tag/book/author filters and a searchable table of contents for webnovel.com.">
+<meta property="og:image" content="https://gishi1.github.io/webnovel-dark-enhanced/social-preview.png">
+<meta property="og:url" content="https://gishi1.github.io/webnovel-dark-enhanced/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gishi1.github.io/webnovel-dark-enhanced/social-preview.png">
+<style>
+:root{--bg:#0b0d12;--surface:#12151d;--surface2:#171b24;--text:#e7e9f0;--dim:#b3b9c7;--muted:#868da0;--border:#262c3a;--accent:#6b93ff;--accent2:#2dd4bf}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+nav{position:sticky;top:0;z-index:20;background:rgba(11,13,18,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+nav .wrap{display:flex;align-items:center;gap:18px;height:58px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--text)}
+.brand img{width:26px;height:26px;border-radius:7px}
+nav .links{display:flex;gap:18px;margin-left:auto;font-size:14px;color:var(--dim)}
+nav .links a{color:var(--dim)}
+nav .links a:hover{color:var(--text)}
+.kofi-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:#ffb3c1;color:#20141a!important;font-weight:800;font-size:13px;text-decoration:none!important}
+header.hero{padding:56px 0 40px;background:radial-gradient(900px 420px at 10% -10%,rgba(107,147,255,.22),transparent 60%),radial-gradient(700px 380px at 95% 110%,rgba(45,212,191,.16),transparent 60%)}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#8fa3c8}
+h1{margin:10px 0 12px;font-size:clamp(34px,5vw,56px);line-height:1.04;letter-spacing:-.02em}
+h1 span{background:linear-gradient(90deg,#8db1ff,#2dd4bf);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tagline{max-width:640px;color:var(--dim);font-size:18px}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;font-weight:700;font-size:14px;border:1px solid var(--border);background:var(--surface2);color:var(--text);text-decoration:none}
+.btn:hover{border-color:var(--accent);text-decoration:none}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#0b0d12}
+.btn.ghost{background:transparent}
+.note{margin-top:12px;font-size:12.5px;color:var(--muted)}
+.hero-art{margin:34px 0 0;border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.hero-art img{display:block;width:100%}
+section{padding:56px 0;border-top:1px solid var(--border)}
+h2{font-size:27px;margin:0 0 8px;letter-spacing:-.01em}
+.sub{color:var(--muted);margin:0 0 26px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.card h3{margin:0 0 6px;font-size:15px}
+.card p{margin:0;color:var(--dim);font-size:14px}
+.shots{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.shots figure{margin:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--surface)}
+.shots img{display:block;width:100%}
+.shots figcaption{padding:8px 12px;font-size:12.5px;color:var(--muted)}
+.steps{counter-reset:step;display:grid;gap:14px;max-width:760px}
+.step{position:relative;padding:16px 18px 16px 58px;background:var(--surface);border:1px solid var(--border);border-radius:12px}
+.step::before{counter-increment:step;content:counter(step);position:absolute;left:16px;top:15px;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#0b0d12;display:grid;place-items:center;font-weight:800;font-size:13px}
+.step strong{display:block;margin-bottom:3px}
+.step p{margin:0;color:var(--dim);font-size:14px}
+.step code{background:var(--surface2);border:1px solid var(--border);border-radius:5px;padding:1px 6px;font-size:13px}
+.support{display:flex;flex-wrap:wrap;align-items:center;gap:18px;background:linear-gradient(120deg,rgba(107,147,255,.12),rgba(45,212,191,.08));border:1px solid var(--border);border-radius:16px;padding:24px}
+.support p{margin:0;color:var(--dim)}
+footer{padding:38px 0 50px;border-top:1px solid var(--border);color:var(--muted);font-size:13px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+footer a{color:var(--dim)}
+@media(max-width:720px){nav .links{display:none}.shots{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <a class="brand" href="#top"><img src="icon128.png" alt=""> WebNovel Dark &amp; Enhanced</a>
+  <div class="links">
+    <a href="#features">Features</a><a href="#screenshots">Screenshots</a><a href="#install">Install</a>
+    <a href="https://github.com/Gishi1/webnovel-dark-enhanced">GitHub</a>
+  </div>
+  <a class="kofi-btn" href="https://ko-fi.com/gishi">♥ Ko-fi</a>
+</div></nav>
+
+<header class="hero" id="top"><div class="wrap">
+  <div class="eyebrow">Chrome extension · Manifest V3 · MIT</div>
+  <h1>WebNovel <span>Dark &amp; Enhanced</span></h1>
+  <p class="tagline">A real dark theme, readable card listings, tag / book / author filters and a reader with a
+  searchable table of contents — for <strong>webnovel.com</strong>.</p>
+  <div class="cta">
+    <a class="btn primary" href="https://github.com/Gishi1/webnovel-dark-enhanced/releases/latest">Download latest release</a>
+    <a class="btn" href="#install">Install guide</a>
+    <a class="btn ghost" href="https://ko-fi.com/gishi">Support on Ko-fi</a>
+  </div>
+  <p class="note">Free · Open source · No tracking · Works in Chrome, Edge and Brave (111+)</p>
+  <div class="hero-art"><img src="banner.png" alt="WebNovel Dark & Enhanced banner"></div>
+</div></header>
+
+<section id="features"><div class="wrap">
+  <h2>Everything the site should have</h2>
+  <p class="sub">Built on the site's own CSS variables, so dialogs, dropdowns and lazy-loaded pages keep up.</p>
+  <div class="grid">
+    <div class="card"><h3>Dark, Midnight &amp; Dim</h3><p>Three palettes and four accents. No inverted images or broken brand colours.</p></div>
+    <div class="card"><h3>Clean listings</h3><p>Cover-grid cards capped at five per row, with tags, descriptions and ratings.</p></div>
+    <div class="card"><h3>Filters on the page</h3><p>Hide or prefer a tag from its chip, block books from a card, block authors from their profile.</p></div>
+    <div class="card"><h3>Whole-catalogue author blocks</h3><p>Blocking an author imports every book on their profile and refreshes it daily.</p></div>
+    <div class="card"><h3>A better reader</h3><p>Width, font, size, line height, progress, scroll memory and chapter hotkeys.</p></div>
+    <div class="card"><h3>Searchable TOC</h3><p>Volume-grouped table of contents with locked badges, type-to-filter and instant opening.</p></div>
+  </div>
+</div></section>
+
+<section id="screenshots"><div class="wrap">
+  <h2>Screenshots</h2>
+  <p class="sub">Chrome Web Store sized · 1280×800.</p>
+  <div class="shots">
+    <figure><img src="store/screenshots/home-1280x800.png" alt="Home page in dark theme"><figcaption>Home — dark theme everywhere</figcaption></figure>
+    <figure><img src="store/screenshots/listing-1280x800.png" alt="Card listings"><figcaption>Listings — five cards per row</figcaption></figure>
+    <figure><img src="store/screenshots/book-1280x800.png" alt="Book page controls"><figcaption>Book page — block author and book</figcaption></figure>
+    <figure><img src="store/screenshots/reader-1280x800.png" alt="Reader"><figcaption>Reader — typography and progress</figcaption></figure>
+    <figure><img src="store/screenshots/toc-1280x800.png" alt="Table of contents"><figcaption>Table of contents — searchable</figcaption></figure>
+    <figure><img src="screenshots/options-dark.png" alt="Settings"><figcaption>Settings — filters, reader, backup</figcaption></figure>
+  </div>
+</div></section>
+
+<section id="install"><div class="wrap">
+  <h2>Install</h2>
+  <p class="sub">The extension is distributed through GitHub releases. A Chrome Web Store listing is in progress.</p>
+  <div class="steps">
+    <div class="step"><strong>Download and extract</strong><p>Get the latest <code>webnovel-dark-enhanced-&lt;version&gt;.zip</code> from <a href="https://github.com/Gishi1/webnovel-dark-enhanced/releases/latest">Releases</a> and unpack it, or clone the repository.</p></div>
+    <div class="step"><strong>Open your extensions page</strong><p><code>chrome://extensions</code> · <code>edge://extensions</code> · <code>brave://extensions</code></p></div>
+    <div class="step"><strong>Enable Developer mode and Load unpacked</strong><p>Select the folder containing <code>manifest.json</code>. Pin the extension, then open webnovel.com.</p></div>
+  </div>
+  <p class="note">Updating: replace the files (or <code>./tools/update.sh</code>), click <strong>Reload</strong> on the extension card, and refresh the site tab. The extension also shows an ↑ badge when a newer release is published.</p>
+</div></section>
+
+<section id="support"><div class="wrap">
+  <h2>Support</h2>
+  <p class="sub">Free and open source. If it makes reading nicer, you can buy me a coffee.</p>
+  <div class="support">
+    <p><strong>Ko-fi</strong> — one-off or monthly, no account needed.</p>
+    <a class="btn primary" href="https://ko-fi.com/gishi">♥ ko-fi.com/gishi</a>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <span>MIT © 2026 Gishi · Not affiliated with WebNovel or Cloudary.</span>
+  <span>
+    <a href="https://github.com/Gishi1/webnovel-dark-enhanced">GitHub</a> ·
+    <a href="https://gitlab.com/Gishi1/webnovel-dark-enhanced">GitLab</a> ·
+    <a href="privacy.html">Privacy</a> ·
+    <a href="https://ko-fi.com/gishi">Ko-fi</a>
+  </span>
+</div></footer>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"WebNovel Dark & Enhanced",
+"applicationCategory":"BrowserApplication","operatingSystem":"Chrome, Edge, Brave",
+"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+"url":"https://gishi1.github.io/webnovel-dark-enhanced/",
+"downloadUrl":"https://github.com/Gishi1/webnovel-dark-enhanced/releases/latest",
+"license":"https://opensource.org/licenses/MIT",
+"author":{"@type":"Person","name":"Gishi","url":"https://ko-fi.com/gishi"}}
+</script>
+</body>
+</html>

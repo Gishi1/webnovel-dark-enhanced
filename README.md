@@ -12,6 +12,7 @@ Dark theme · card listings · tag, book and author filters · a reader with a s
 ![Chrome 111+](https://img.shields.io/badge/chrome-111%2B-blue)
 ![License MIT](https://img.shields.io/badge/license-MIT-green)
 ![No tracking](https://img.shields.io/badge/tracking-none-lightgrey)
+[![Website](https://img.shields.io/badge/website-live-2dd4bf)](https://gishi1.github.io/webnovel-dark-enhanced/)
 
 [![Buy me a coffee at ko-fi.com](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/gishi)
 

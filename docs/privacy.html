@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy — WebNovel Dark &amp; Enhanced</title>
+<style>
+:root{color-scheme:dark}
+body{margin:0;background:#0b0d12;color:#e7e9f0;font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:760px;margin:0 auto;padding:56px 22px 80px}
+a{color:#8fb0ff}
+h1{font-size:32px;margin:0 0 8px}
+h2{font-size:19px;margin:32px 0 8px}
+p,li{color:#b3b9c7}
+code{background:#1f2531;padding:1px 6px;border-radius:5px;font-size:14px}
+.updated{color:#868da0;font-size:14px}
+</style></head>
+<body><main>
+<h1>Privacy</h1>
+<p class="updated">WebNovel Dark &amp; Enhanced · last updated 2026-11-03</p>
+<p>This extension does not collect, transmit, sell or share personal data. There is no account, analytics,
+telemetry, advertising or remote code.</p>
+<h2>What is stored</h2>
+<ul>
+<li>Theme, cleanup, listing and reader preferences.</li>
+<li>Your filter lists (hidden/preferred tags, blocked books and authors, keywords).</li>
+<li>Cached author catalogues (public book ids) and per-book reading positions.</li>
+<li>The last update-check result.</li>
+</ul>
+<p>All of it lives in <code>chrome.storage.local</code> on your device. Use <strong>Export settings</strong>
+in the options page for a backup; <strong>Reset</strong> removes it.</p>
+<h2>Network requests</h2>
+<ul>
+<li><code>/book/&lt;id&gt;/catalog</code> on webnovel.com, to build the table of contents and chapter navigation.</li>
+<li><code>/profile/&lt;id&gt;</code> on webnovel.com when you block an author, to import their public book list.</li>
+<li>The latest release tag from <code>api.github.com</code> (fallback <code>gitlab.com/api</code>) every 12 hours,
+or when you press Check for updates. Only the release tag and URL are read; no data is sent.</li>
+</ul>
+<h2>Permissions</h2>
+<p><code>storage</code> keeps the data above; <code>alarms</code> schedules the update and author refreshes;
+the host permissions are limited to webnovel.com and the two release feeds.</p>
+<h2>Contact</h2>
+<p>Questions or removal requests: open an issue at
+<a href="https://github.com/Gishi1/webnovel-dark-enhanced/issues">github.com/Gishi1/webnovel-dark-enhanced</a>
+or reach out via <a href="https://ko-fi.com/gishi">ko-fi.com/gishi</a>.</p>
+<p><a href="index.html">← Back to the project</a></p>
+</main></body></html>
