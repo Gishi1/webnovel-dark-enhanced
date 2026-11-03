@@ -100,17 +100,17 @@ Everything is local and editable from the site:
 | --- | --- |
 | ![Home](docs/screenshots/home-dark.png) | ![Listings](docs/screenshots/listing-dark.png) |
 
-| Book page | Reader |
+| Search | Book page |
 | --- | --- |
-| ![Book page](docs/screenshots/book-page-dark.png) | ![Reader](docs/screenshots/reader-dark.png) |
+| ![Search](docs/screenshots/search-dark.png) | ![Book page](docs/screenshots/book-page-dark.png) |
 
-| Table of contents | Catalogue |
+| Reader | Table of contents |
 | --- | --- |
-| ![Table of contents](docs/screenshots/toc-dark.png) | ![Catalogue](docs/screenshots/catalog-dark.png) |
+| ![Reader](docs/screenshots/reader-dark.png) | ![Table of contents](docs/screenshots/toc-dark.png) |
 
-| Search |
-| --- |
-| ![Search](docs/screenshots/search-dark.png) |
+| Catalogue | Settings |
+| --- | --- |
+| ![Catalogue](docs/screenshots/catalog-dark.png) | ![Settings](docs/screenshots/options-dark.png) |
 
 ## Install
 
