@@ -85,7 +85,7 @@ Everything is local and editable from the site:
 ### Reader
 - Page width (narrow / medium / wide / full), font family, font size and line height.
 - Justify text, hide paragraph-comment markers, thin progress bar and per-book scroll memory.
-- `←` / `→` move between chapters (uses a cached chapter list), `+` / `−` change font size.
+- `←` / `→` move between chapters (uses a cached chapter list); `+`, `=` or `-` change font size.
 - **Searchable table of contents** with volume grouping, locked badges, current-chapter marker and
   type-to-filter. The catalogue is prefetched while you read, so the dialog opens instantly.
 
@@ -169,7 +169,8 @@ Open the popup or **All settings → Appearance**:
 | Shortcut | Action |
 | --- | --- |
 | `←` / `→` | Previous / next chapter |
-| `+` / `−` | Increase / decrease font size |
+| `+` / `=` | Increase font size |
+| `-` | Decrease font size |
 | `Esc` | Close the table of contents |
 
 The table-of-contents button in the reader toolbar opens the enhanced dialog. Type part of a chapter

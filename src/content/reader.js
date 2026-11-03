@@ -246,7 +246,7 @@
     document.addEventListener('keydown', (event) => {
       if (!settings || !settings.enabled || !isReader()) return;
       if (!settings.reader.hotkeys) return;
-      if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      if (event.altKey || event.ctrlKey || event.metaKey) return;
       if (U.isTypingTarget(event.target)) return;
 
       if (event.key === 'ArrowRight') {
