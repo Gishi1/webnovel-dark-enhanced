@@ -4,6 +4,17 @@ All notable changes to this project are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 and the project uses [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] - 2026-11-03
+
+### Added
+- Update notifier: checks GitHub (fallback GitLab) release feeds twice a day, sets an `↑` toolbar badge
+  and shows a popup banner with a release link, plus a manual **Check for updates** button.
+- Ko-fi link in the popup footer and settings sidebar.
+- `tools/update.sh` and `tools/reload-extension.mjs` to pull, reload the unpacked extension and refresh tabs.
+
+### Changed
+- Manifest permissions now include `alarms` and read-only access to the GitHub/GitLab release APIs.
+
 ## [1.1.0] - 2026-11-03
 
 ### Added

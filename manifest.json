@@ -2,15 +2,18 @@
   "manifest_version": 3,
   "name": "WebNovel Dark & Enhanced",
   "short_name": "WebNovel+",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A proper dark theme, a decluttered layout, book filters and a better reader for webnovel.com.",
   "author": "Gishi",
   "minimum_chrome_version": "111",
   "permissions": [
-    "storage"
+    "storage",
+    "alarms"
   ],
   "host_permissions": [
-    "https://www.webnovel.com/*"
+    "https://www.webnovel.com/*",
+    "https://api.github.com/*",
+    "https://gitlab.com/api/*"
   ],
   "background": {
     "service_worker": "src/background.js"

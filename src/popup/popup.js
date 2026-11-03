@@ -81,11 +81,35 @@ async function describePage() {
   }
 }
 
+function renderUpdate(info) {
+  const banner = $('#updateBanner');
+  const check = $('#checkUpdates');
+  if (info && info.available) {
+    banner.hidden = false;
+    $('#updateTitle').textContent = `v${info.latest} available`;
+    $('#updateText').textContent = `You are on v${info.current}. Update from the repo, then reload the extension.`;
+    $('#updateLink').href = info.url || '#';
+  } else {
+    banner.hidden = true;
+  }
+  if (check) check.textContent = info && info.checkedAt ? 'Check again' : 'Check for updates';
+}
+
+async function loadUpdate() {
+  try {
+    const stored = await chrome.storage.local.get('wne.update');
+    renderUpdate(stored['wne.update']);
+  } catch (_) {
+    renderUpdate(null);
+  }
+}
+
 async function init() {
   const settings = await WNE.settings.load();
   render(settings);
   WNE.settings.onChange(render);
   describePage();
+  loadUpdate();
   $('#version').textContent = 'v' + WNE.VERSION;
 
   $('#enabled').addEventListener('change', (event) => {
@@ -120,6 +144,34 @@ async function init() {
 
   $('#openOptions').addEventListener('click', () => {
     chrome.runtime.openOptionsPage();
+  });
+
+  $('#checkUpdates').addEventListener('click', async (event) => {
+    const button = event.currentTarget;
+    button.disabled = true;
+    button.textContent = 'Checking…';
+    try {
+      await chrome.runtime.sendMessage({ type: 'wne:check-update' });
+    } catch (_) {
+      /* worker may be restarting */
+    }
+    await loadUpdate();
+    button.disabled = false;
+  });
+
+  $('#updateLink').addEventListener('click', (event) => {
+    event.preventDefault();
+    const href = event.currentTarget.getAttribute('href');
+    if (href && href !== '#') chrome.tabs.create({ url: href });
+  });
+
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area === 'local' && changes['wne.update']) renderUpdate(changes['wne.update'].newValue);
+  });
+
+  $('#kofi').addEventListener('click', (event) => {
+    event.preventDefault();
+    chrome.tabs.create({ url: 'https://ko-fi.com/gishi' });
   });
 
   $('#reload').addEventListener('click', async () => {

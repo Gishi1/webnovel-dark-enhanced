@@ -7,7 +7,7 @@
 **A Chrome extension that makes [webnovel.com](https://www.webnovel.com) comfortable to read.**
 Dark theme · card listings · tag, book and author filters · a reader with a searchable table of contents.
 
-![Version](https://img.shields.io/badge/version-1.1.0-6b93ff)
+![Version](https://img.shields.io/badge/version-1.2.0-6b93ff)
 ![Manifest V3](https://img.shields.io/badge/manifest-v3-2dd4bf)
 ![Chrome 111+](https://img.shields.io/badge/chrome-111%2B-blue)
 ![License MIT](https://img.shields.io/badge/license-MIT-green)
@@ -26,6 +26,7 @@ Dark theme · card listings · tag, book and author filters · a reader with a s
 - [Screenshots](#screenshots)
 - [Install](#install)
 - [Usage](#usage)
+- [Updating](#updating)
 - [Permissions and privacy](#permissions-and-privacy)
 - [How it works](#how-it-works)
 - [Development](#development)
@@ -90,6 +91,9 @@ Everything is local and editable from the site:
   type-to-filter. The catalogue is prefetched while you read, so the dialog opens instantly.
 
 ### Extras
+- **Update notifier**: checks the public GitHub/GitLab releases twice a day, shows an `↑` badge and a
+  popup banner when a newer version exists, and has a manual **Check for updates** button.
+- **Ko-fi links** in the popup footer and the settings sidebar.
 - Settings live in `chrome.storage.local`; export/import from the options page.
 - `Alt+Shift+D` toggles the theme, `Alt+Shift+O` opens settings.
 - No analytics, no remote code, no tracking.
@@ -176,16 +180,56 @@ Open the popup or **All settings → Appearance**:
 The table-of-contents button in the reader toolbar opens the enhanced dialog. Type part of a chapter
 title, or an exact chapter number, to filter.
 
+## Updating
+
+Chrome **does not auto-update unpacked extensions**. There are three levels:
+
+### 1. Built-in notifier (automatic detection)
+The service worker checks the latest GitHub release (falling back to GitLab) on install, on browser
+startup and every 12 hours. When the published tag is newer than the installed version:
+
+- the toolbar icon shows a small **↑** badge,
+- the popup shows a **vX.Y.Z available** banner with a link to the release notes,
+- **Check for updates** in the popup performs an immediate check.
+
+No account, telemetry or payload is involved — it only reads the release tag and URL.
+
+### 2. Manual update (unpacked)
+```sh
+git pull --ff-only
+```
+Then open `chrome://extensions` → **Reload** on the extension card → refresh any open WebNovel tab.
+If you downloaded a ZIP instead, replace the folder contents and reload the same way.
+
+### 3. Scripted update (optional)
+With the browser running with `--remote-debugging-port=9225`:
+
+```sh
+./tools/update.sh
+```
+
+It pulls the repo, prints the version change, calls `chrome.runtime.reload()` through the DevTools
+protocol and refreshes WebNovel tabs automatically. If no debuggable browser is found it prints the
+manual steps instead.
+
+> **Why not fully automatic?** Chrome only auto-updates extensions installed from the Chrome Web Store
+> or, for managed devices, a self-hosted CRX with an `update_url` policy. Unpacked extensions never
+> update themselves, and Manifest V3 forbids downloading and executing remote code. Publishing to the
+> Web Store is the way to get true silent updates; the self-hosted CRX route is restricted to
+> enterprise policy on current Chrome/Brave builds.
+
 ## Permissions and privacy
 
 | Permission | Why it is needed |
 | --- | --- |
-| `storage` | Save your settings and per-book reading positions locally. |
+| `storage` | Save your settings, reading positions and the last update check locally. |
+| `alarms` | Schedule the twice-daily release check. |
 | `https://www.webnovel.com/*` | Inject the theme and scripts on WebNovel only. |
+| `https://api.github.com/*`, `https://gitlab.com/api/*` | Read the latest release tag for the update notifier. |
 
-- No analytics, telemetry, ads or remote code.
-- The only network request the extension makes on its own is a same-origin fetch of
-  `/book/<id>/catalog` (the chapter list) when you use the TOC or chapter hotkeys.
+- No analytics, telemetry, ads or remote code. The update check only reads a release tag and URL.
+- Network requests made by the extension: a same-origin fetch of `/book/<id>/catalog` (chapter list) for
+  the TOC/hotkeys, and the release check every 12 hours (or when you press **Check for updates**).
 - Settings never leave your browser; use **Export settings** if you want a backup.
 
 ## How it works
@@ -237,6 +281,9 @@ WNE_CLEAN=1 ./tools/audit.sh
 # WCAG contrast audit of the current page
 node tools/verify.mjs <url> tools/contrast.js out.png
 
+# Pull and reload the unpacked extension (needs a debuggable browser)
+./tools/update.sh
+
 # Rebuild the release zip
 ./tools/package.sh
 
@@ -268,6 +315,10 @@ later opens are instant; the dialog retries and offers the site's own dialog if 
 **The sign-in dialog is still light.**
 It is a cross-origin iframe (`#loginIfr`), which extensions cannot restyle.
 
+**The toolbar badge shows ↑ but I already updated.**
+Click **Check again** in the popup after reloading the extension; the release feed may still list the
+version you just installed until it is published.
+
 **Something looks wrong after a WebNovel update.**
 The site's class names or CSS variables may have changed. Open an issue with the page URL and a screenshot.
 
@@ -278,6 +329,8 @@ If this makes reading nicer, you can support development on Ko-fi:
 [![Buy me a coffee at ko-fi.com](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/gishi)
 
 → [**ko-fi.com/gishi**](https://ko-fi.com/gishi)
+
+The popup footer and the settings sidebar link here too.
 
 ## Credits
 

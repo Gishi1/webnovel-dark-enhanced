@@ -121,6 +121,18 @@ nav a.is-active {
   margin-left: auto;
 }
 
+.kofi-link {
+  color: #ffb3c1;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.kofi-link:hover {
+  color: #ffd0da;
+  text-decoration: underline;
+}
+
 /* Content ----------------------------------------------------------------- */
 
 .content {
