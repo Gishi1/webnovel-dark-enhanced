@@ -60,6 +60,7 @@
         "src/content/listing.js",
         "src/content/reader.js",
         "src/content/toc.js",
+        "src/content/inline.js",
         "src/content/core.js"
       ],
       "css": [
@@ -67,6 +68,7 @@
         "src/styles/listing.css",
         "src/styles/reader.css",
         "src/styles/toc.css",
+        "src/styles/inline.css",
         "src/styles/ui.css"
       ],
       "run_at": "document_start"

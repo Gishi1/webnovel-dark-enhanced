@@ -17,6 +17,7 @@
     WNE.listing.apply(settings);
     WNE.reader.apply(settings);
     if (WNE.toc) WNE.toc.apply(settings);
+    if (WNE.inline) WNE.inline.apply(settings);
     document.documentElement.dataset.wneReady = '1';
   }
 
@@ -52,6 +53,7 @@
         if (!settings || !settings.enabled) return;
         if (WNE.cleanup) WNE.cleanup.refresh();
         if (WNE.listing) WNE.listing.refresh();
+        if (WNE.inline) WNE.inline.refresh();
       }, 200)
     );
     mo.observe(document.documentElement, { childList: true, subtree: true });
@@ -71,6 +73,7 @@
     WNE.listing.init();
     WNE.reader.init();
     if (WNE.toc) WNE.toc.init();
+    if (WNE.inline) WNE.inline.init();
     applyAll();
     setupObservers();
   }

@@ -4,10 +4,12 @@
    ========================================================================== */
 
 .wne-filterbar {
+  max-width: 1160px;
+  box-sizing: border-box;
+  margin: 0 auto 16px;
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 0 0 16px;
   padding: 9px 12px;
   border: 1px solid var(--wn-border, #262c3a);
   border-radius: 10px;

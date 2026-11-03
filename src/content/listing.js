@@ -184,28 +184,55 @@
     if (badge.dataset.score !== String(score)) badge.dataset.score = String(score);
   }
 
+  function isBookBlocked(info) {
+    const list = (WNE.settings.get().filters.blockBooks || []).map((entry) => String(entry).toLowerCase());
+    return list.some((entry) => entry.includes(info.id) || entry.includes(info.slug));
+  }
+
+  function toggleBlockedBook(info) {
+    const current = WNE.settings.get();
+    const list = current.filters.blockBooks || [];
+    const blocked = list.some((entry) => {
+      const value = String(entry).toLowerCase();
+      return value.includes(info.id) || value.includes(info.slug);
+    });
+    const next = blocked
+      ? list.filter((entry) => {
+          const value = String(entry).toLowerCase();
+          return !value.includes(info.id) && !value.includes(info.slug);
+        })
+      : list.concat(info.id);
+    WNE.settings.save({ filters: { blockBooks: next } });
+  }
+
   function ensureHideButton(li, info, enabled) {
     let button = li.querySelector(':scope > .wne-hide');
     if (!enabled) {
       if (button) button.remove();
       return;
     }
-    if (button) return;
-    button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'wne-hide wne-ui';
-    button.title = 'Hide this book from listings';
-    button.setAttribute('aria-label', 'Hide this book from listings');
-    button.textContent = '\u00d7';
-    button.addEventListener('click', (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      const current = WNE.settings.get();
-      if (current.filters.blockBooks.includes(info.id)) return;
-      button.disabled = true;
-      WNE.settings.save({ filters: { blockBooks: current.filters.blockBooks.concat(info.id) } });
-    });
-    li.appendChild(button);
+    if (!button) {
+      button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'wne-hide wne-ui';
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        toggleBlockedBook(info);
+      });
+      li.appendChild(button);
+    }
+
+    // The same control blocks and unblocks, depending on the stored list.
+    const blocked = isBookBlocked(info);
+    button.classList.toggle('wne-hide--blocked', blocked);
+    const label = blocked ? '\u21ba' : '\u00d7';
+    if (button.textContent !== label) button.textContent = label;
+    const title = blocked ? 'Unblock this book' : 'Hide this book from listings';
+    if (button.title !== title) {
+      button.title = title;
+      button.setAttribute('aria-label', title);
+    }
   }
 
   function applyCard(li, rules, options) {
@@ -297,8 +324,8 @@
       enabled: Boolean(next.enabled),
       // Card restyling is limited to listing routes: the home page mixes
       // unrelated `li.fl` rows into narrow columns where cards would break.
-      enhance: Boolean(next.listing.enhance) && listingPage,
-      grid: Boolean(next.listing.enhance && next.listing.grid) && listingPage,
+      enhance: Boolean(next.enabled) && Boolean(next.listing.enhance) && listingPage,
+      grid: Boolean(next.enabled) && Boolean(next.listing.enhance && next.listing.grid) && listingPage,
       badges: Boolean(next.listing.badges),
       hideMode: next.listing.hideMode === 'hide' ? 'hide' : 'dim',
       minRating: Number(next.listing.minRating) || 0

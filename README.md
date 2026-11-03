@@ -43,7 +43,13 @@ Rules run locally on every listing; nothing leaves the browser.
 - Hide descriptions containing keywords.
 - Minimum rating.
 - Filtered books are either dimmed or removed; a summary bar shows the count and can reveal them again.
-- Per-card "hide" writes to the block list.
+- **On-site controls** (no options page needed):
+  - Click any tag chip on a listing card or a book page for a menu with **Hide this tag**, **Prefer this tag** and **Open tag page**.
+  - Tag pages (`/tags/<tag>`) get **Hide / Prefer** buttons under the title.
+  - Book pages get **Block author** next to the author name and **Block book** next to READ; blocking an
+    author also hides the current book, because listings carry no author data.
+  - Each card's corner button toggles **block / unblock** (× / ↺), and blocked cards stay reachable through
+    "Show all" in the filter bar.
 
 ### Reader
 - Width (narrow / medium / wide / full), font family (serif / sans / system), font size and line height.
@@ -76,6 +82,10 @@ Rules run locally on every listing; nothing leaves the browser.
 | Table of contents | Catalogue tab |
 | --- | --- |
 | ![Table of contents](docs/screenshots/toc-dark.png) | ![Catalogue](docs/screenshots/catalog-dark.png) |
+
+| Book page controls |
+| --- |
+| ![Book page](docs/screenshots/book-page-dark.png) |
 
 ## Install (unpacked)
 
@@ -125,12 +135,14 @@ src/
     listing.js             card parsing, filtering, badges, filter bar
     reader.js              typography, progress, hotkeys, scroll memory
     toc.js                 enhanced table of contents overlay
+    inline.js              tag menu, tag-page buttons, author/book buttons
     core.js                boot, observers, route changes
   styles/
     theme.css              palette + site-variable overrides
     listing.css            card grid
     reader.css             reader chrome (progress, toast)
     toc.css                table-of-contents overlay
+    inline.css             inline filter controls
     ui.css                 filter bar and block notice
   popup/                   toolbar popup
   options/                 full settings page
