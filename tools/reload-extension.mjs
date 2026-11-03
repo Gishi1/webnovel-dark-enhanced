@@ -69,4 +69,26 @@ for (const page of pages) {
   } catch (_) { /* tab may be closing */ }
 }
 
-console.log(`Reloaded extension ${id} and refreshed ${pages.length} WebNovel tab(s).`);
+// After a reload Chrome may disable an unpacked extension if Developer mode
+// is off; opening the popup tells us whether the package is still usable.
+let healthy = true;
+try {
+  const probe = await (await fetch(`${base}/json/new?${encodeURIComponent(`chrome-extension://${id}/src/popup/popup.html`)}`, { method: 'PUT' })).json();
+  const { ws, send } = await connect(probe);
+  const result = await send('Runtime.evaluate', { expression: 'location.href', returnByValue: true });
+  healthy = !String(result.result.value || '').startsWith('chrome-error');
+  ws.close();
+  await fetch(`${base}/json/close/${probe.id}`).catch(() => {});
+} catch (_) {
+  healthy = false;
+}
+
+if (healthy) {
+  console.log(`Reloaded extension ${id} and refreshed ${pages.length} WebNovel tab(s).`);
+} else {
+  console.error(
+    'The extension was reloaded but is disabled.\n' +
+    'Open chrome://extensions, enable Developer mode, then enable the extension (new permissions require this once).'
+  );
+  process.exitCode = 2;
+}

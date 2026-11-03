@@ -210,7 +210,8 @@ With the browser running with `--remote-debugging-port=9225`:
 
 It pulls the repo, prints the version change, calls `chrome.runtime.reload()` through the DevTools
 protocol and refreshes WebNovel tabs automatically. If no debuggable browser is found it prints the
-manual steps instead.
+manual steps instead. Chrome must be in **Developer mode** for unpacked extensions to stay enabled
+across a reload — otherwise Chrome disables the extension and the script tells you to re-enable it.
 
 > **Why not fully automatic?** Chrome only auto-updates extensions installed from the Chrome Web Store
 > or, for managed devices, a self-hosted CRX with an `update_url` policy. Unpacked extensions never

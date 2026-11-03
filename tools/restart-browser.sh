@@ -28,7 +28,20 @@ for pid in os.listdir('/proc'):
 PY
 sleep 2
 if [ "${WNE_CLEAN:-0}" = "1" ]; then rm -rf "$PROFILE"; fi
-mkdir -p "$PROFILE"
+mkdir -p "$PROFILE/Default"
+# Chrome disables unpacked extensions on reload when Developer mode is off.
+python3 - "$PROFILE/Default/Preferences" <<'PY'
+import json, os, sys
+path = sys.argv[1]
+data = {}
+if os.path.exists(path):
+    try:
+        data = json.load(open(path))
+    except Exception:
+        data = {}
+data.setdefault('extensions', {}).setdefault('ui', {})['developer_mode'] = True
+json.dump(data, open(path, 'w'))
+PY
 DISPLAY=:99 nohup brave --no-sandbox --no-first-run --no-default-browser-check --disable-gpu \
   --disable-dev-shm-usage --remote-debugging-port="$PORT" --user-data-dir="$PROFILE" --window-size=1500,2400 \
   --load-extension="$EXT" --disable-extensions-except="$EXT" \
