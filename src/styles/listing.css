@@ -38,10 +38,12 @@ html.wne-cards-on .wne-card:hover {
 
 html.wne-grid-on .wne-grid {
   display: grid !important;
-  grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)) !important;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)) !important;
   gap: 16px !important;
   width: 100% !important;
-  margin: 0 0 24px !important;
+  /* Five columns is the ceiling: 6 x 210px + gaps would need ~1340px. */
+  max-width: 1160px !important;
+  margin: 0 auto 24px !important;
   padding: 0 !important;
   list-style: none !important;
   float: none !important;
