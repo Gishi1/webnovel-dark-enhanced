@@ -64,6 +64,9 @@ function setControlValue(control, value) {
 }
 
 function renderToggles(current) {
+  const master = $('#enabled');
+  if (master) master.checked = Boolean(current.enabled);
+
   for (const control of $$('[data-path]')) {
     if (control === document.activeElement) continue;
     const value = getPath(current, control.dataset.path);
