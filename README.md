@@ -57,6 +57,16 @@ Rules run locally on every listing; nothing leaves the browser.
 - Options page with all settings, chip editors for tag lists, book/author/keyword lists,
   JSON export/import and reset.
 
+## Screenshots
+
+| Home | Listing |
+| --- | --- |
+| ![Home](docs/screenshots/home-dark.png) | ![Listing](docs/screenshots/listing-dark.png) |
+
+| Search | Reader |
+| --- | --- |
+| ![Search](docs/screenshots/search-dark.png) | ![Reader](docs/screenshots/reader-dark.png) |
+
 ## Install (unpacked)
 
 1. Open `chrome://extensions` (or `brave://extensions`).
