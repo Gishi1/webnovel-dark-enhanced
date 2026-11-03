@@ -60,7 +60,7 @@
 
   const STORAGE_KEY = 'settings';
   const CACHE_KEY = 'wne.cache';
-  const VERSION = '1.2.0';
+  const VERSION = '1.3.0';
 
   function clone(value) {
     return JSON.parse(JSON.stringify(value));

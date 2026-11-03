@@ -17,6 +17,7 @@
 
   const isBookPage = () => U.pageType() === 'book';
   const isTagPage = () => /^\/tags\/[^/]+\/?$/.test(location.pathname);
+  const isProfilePage = () => /^\/profile\/\d+/.test(location.pathname);
 
   function bookId() {
     // Both /book/<slug>_<id> and the canonical /book/<id> forms are used.
@@ -238,22 +239,40 @@
 
   /* ------------------------------------------------------------ book page */
 
-  async function toggleAuthor(author, link) {
-    const current = settings.filters;
-    const blocked = normalizeList(current.blockAuthors).includes(author.toLowerCase());
-    let authors = (current.blockAuthors || []).filter((name) => String(name).toLowerCase() !== author.toLowerCase());
-    let books = (current.blockBooks || []).slice();
-    const id = bookId();
+  async function toggleAuthor(author, profileUrl) {
+    const name = U.normalizeText(author);
+    if (!name) return;
+    const current = WNE.settings.get().filters;
+    const blocked = normalizeList(current.blockAuthors).includes(name.toLowerCase());
 
-    if (!blocked) {
-      authors = authors.concat(author);
-      // Their books carry no author in listings, so make the block effective now
-      // by also hiding the book the user blocked them from.
-      if (id && !U.listHasBook(books, id, '')) books.push(id);
+    if (blocked) {
+      const authors = (current.blockAuthors || []).filter(
+        (entry) => String(entry).toLowerCase() !== name.toLowerCase()
+      );
+      await WNE.settings.save({ filters: { blockAuthors: authors } });
+      if (WNE.authorBooks) await WNE.authorBooks.remove(name);
+      toast(`Unblocked ${name}`);
+      return;
     }
 
-    await WNE.settings.save({ filters: { blockAuthors: authors, blockBooks: books } });
-    toast(blocked ? `Unblocked ${author}` : `Blocked ${author}${id ? ' and this book' : ''}`);
+    const authors = (current.blockAuthors || []).concat(name);
+    await WNE.settings.save({ filters: { blockAuthors: authors } });
+
+    let count = 0;
+    if (WNE.authorBooks) count = await WNE.authorBooks.resolve(name, profileUrl);
+
+    if (!count) {
+      // Profile unavailable: hide at least the book the user blocked them from.
+      const id = bookId();
+      const books = (WNE.settings.get().filters.blockBooks || []).slice();
+      if (id && !U.listHasBook(books, id, '')) {
+        books.push(id);
+        await WNE.settings.save({ filters: { blockBooks: books } });
+      }
+      toast(`Blocked ${name} — could not load their catalogue; hid this book only`);
+    } else {
+      toast(`Blocked ${name} — ${count} book${count === 1 ? '' : 's'} hidden`);
+    }
   }
 
   async function toggleBook() {
@@ -268,6 +287,29 @@
     toast(blocked ? 'Book unblocked' : 'Book hidden from listings');
   }
 
+  function ensureProfileButtons() {
+    if (!settings || !settings.enabled || !isProfilePage()) return;
+    const h1 = document.querySelector('h1');
+    if (!h1) return;
+    const author = U.normalizeText(h1.textContent);
+    if (!author) return;
+
+    let button = document.querySelector('.wne-profile-author-btn');
+    if (!button) {
+      button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'wne-author-btn wne-profile-author-btn wne-ui';
+      button.addEventListener('click', () => toggleAuthor(button.dataset.author, location.pathname));
+      h1.insertAdjacentElement('afterend', button);
+    }
+    button.dataset.author = author;
+
+    const blocked = normalizeList(settings.filters.blockAuthors).includes(author.toLowerCase());
+    const label = blocked ? 'Unblock author' : 'Block author';
+    if (button.textContent !== label) button.textContent = label;
+    button.classList.toggle('is-active', blocked);
+  }
+
   function ensureBookButtons() {
     if (!settings || !settings.enabled || !isBookPage()) return;
 
@@ -280,7 +322,9 @@
         button = document.createElement('button');
         button.type = 'button';
         button.className = 'wne-author-btn wne-ui';
-        button.addEventListener('click', () => toggleAuthor(button.dataset.author, authorLink));
+        button.addEventListener('click', () =>
+          toggleAuthor(button.dataset.author, authorLink.getAttribute('href'))
+        );
         authorLink.insertAdjacentElement('afterend', button);
       }
       if (button.dataset.author !== author) button.dataset.author = author;
@@ -312,6 +356,7 @@
     if (!settings || !settings.enabled) return;
     ensureTagPageButtons();
     ensureBookButtons();
+    ensureProfileButtons();
     applyTagStates();
   }
 

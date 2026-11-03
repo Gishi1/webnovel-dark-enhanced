@@ -138,7 +138,19 @@
     const authors = (filters.blockAuthors || [])
       .map((name) => String(name || '').trim().toLowerCase())
       .filter(Boolean);
-    return { hideTags, preferTags, ids, slugs, keywords, authors };
+    const authorData = WNE.authorBooks
+      ? WNE.authorBooks.blocked(filters.blockAuthors)
+      : { ids: new Set(), authorNames: new Map() };
+    return {
+      hideTags,
+      preferTags,
+      ids,
+      slugs,
+      keywords,
+      authors,
+      authorIds: authorData.ids,
+      authorNames: authorData.authorNames
+    };
   }
 
   function evaluate(info, rules, options) {
@@ -149,6 +161,10 @@
       if (rules.hideTags.has(tag)) reasons.push(tag);
     }
     if (rules.ids.has(info.id) || rules.slugs.has(info.slug)) reasons.push('blocked book');
+    if (rules.authorIds && rules.authorIds.has(info.id)) {
+      const author = rules.authorNames.get(info.id) || 'blocked';
+      reasons.push('author: ' + author);
+    }
     if (options.minRating > 0 && info.rating > 0 && info.rating < options.minRating) {
       reasons.push(`rating < ${options.minRating}`);
     }
@@ -198,9 +214,15 @@
     WNE.settings.save({ filters: { blockBooks: next } });
   }
 
-  function ensureHideButton(li, info, enabled) {
+  function ensureHideButton(li, info, enabled, rules) {
     let button = li.querySelector(':scope > .wne-hide');
     if (!enabled) {
+      if (button) button.remove();
+      return;
+    }
+    const byAuthor = Boolean(rules && rules.authorIds && rules.authorIds.has(info.id));
+    const explicit = isBookBlocked(info);
+    if (byAuthor && !explicit) {
       if (button) button.remove();
       return;
     }
@@ -245,7 +267,7 @@
     li.dataset.wneReason = result.reasons.join(', ');
 
     ensureBadge(li, result.score, styled && options.badges && rules.preferTags.length > 0);
-    ensureHideButton(li, info, styled);
+    ensureHideButton(li, info, styled, rules);
     return { li, info, result, kind };
   }
 

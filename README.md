@@ -7,7 +7,7 @@
 **A Chrome extension that makes [webnovel.com](https://www.webnovel.com) comfortable to read.**
 Dark theme · card listings · tag, book and author filters · a reader with a searchable table of contents.
 
-![Version](https://img.shields.io/badge/version-1.2.0-6b93ff)
+![Version](https://img.shields.io/badge/version-1.3.0-6b93ff)
 ![Manifest V3](https://img.shields.io/badge/manifest-v3-2dd4bf)
 ![Chrome 111+](https://img.shields.io/badge/chrome-111%2B-blue)
 ![License MIT](https://img.shields.io/badge/license-MIT-green)
@@ -75,13 +75,17 @@ Everything is local and editable from the site:
 | **Tag chip** (listing cards, book pages) | Hide this tag · Prefer this tag · Open tag page |
 | **Tag page** (`/tags/<tag>`) | Hide / Prefer buttons under the title |
 | **Book page** | Block author (next to the author) · Block book (next to READ) |
+| **Author profile** | Block author (next to the name) — imports every book on their profile |
 | **Filter bar** | Show all · Remove filtered / Dim filtered · open settings |
 | **Toolbar popup** | Master switch, theme, quick cleanups, remove-filtered toggle |
 | **Options page** | Full lists, keyword and rating filters, import/export |
 
 - Filtered books are **dimmed** or **removed** — toggle between the two from the filter bar or popup.
 - Block lists accept numeric ids, slugs, `/book/<slug>_<id>` paths or full URLs.
-- Blocking an author also hides the book you are on, because listing cards don't expose author names.
+- **Author blocking resolves their whole catalogue**: blocking from a book or author profile fetches their
+  public profile, records every book under `.g_book_item`, and hides all of them in listings. The mapping
+  is refreshed every 24 hours and whenever you block, so new releases are picked up. If the profile can't
+  be fetched, the book you blocked from is hidden as a fallback.
 
 ### Reader
 - Page width (narrow / medium / wide / full), font family, font size and line height.

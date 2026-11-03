@@ -68,6 +68,7 @@ async function writeSettings(settings) {
 const REPO = { owner: 'Gishi1', name: 'webnovel-dark-enhanced' };
 const UPDATE_KEY = 'wne.update';
 const UPDATE_ALARM = 'wne:update';
+const AUTHOR_ALARM = 'wne:authors';
 const CHECK_PERIOD_MINUTES = 720;
 
 function parseVersion(value) {
@@ -171,6 +172,7 @@ async function checkForUpdate() {
 function scheduleUpdateChecks() {
   try {
     chrome.alarms.create(UPDATE_ALARM, { periodInMinutes: CHECK_PERIOD_MINUTES });
+    chrome.alarms.create(AUTHOR_ALARM, { periodInMinutes: 24 * 60 });
   } catch (_) {
     /* alarms are optional */
   }
@@ -183,6 +185,14 @@ chrome.runtime.onStartup.addListener(() => {
 
 chrome.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === UPDATE_ALARM) checkForUpdate();
+  if (alarm.name === AUTHOR_ALARM) {
+    // Ask any open WebNovel tab to refresh blocked-author catalogues.
+    chrome.tabs.query({ url: 'https://www.webnovel.com/*' }).then((tabs) => {
+      for (const tab of tabs) {
+        chrome.tabs.sendMessage(tab.id, { type: 'wne:sync-authors' }).catch(() => {});
+      }
+    }).catch(() => {});
+  }
 });
 
 chrome.runtime.onInstalled.addListener(async (details) => {

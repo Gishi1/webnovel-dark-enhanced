@@ -4,6 +4,19 @@ All notable changes to this project are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 and the project uses [Semantic Versioning](https://semver.org/).
 
+## [1.3.0] - 2026-11-03
+
+### Added
+- Author blocking now imports the author's full catalogue from their public profile
+  (`.g_book_item` works), hides every one of their books in listings and refreshes the mapping
+  every 24 hours, when a stale page loads, and whenever the author is blocked.
+- **Block author** button on author profile pages (`/profile/<id>`).
+- Author-blocked cards show `author: <name>` as the filter reason.
+
+### Changed
+- If the profile cannot be fetched, blocking falls back to hiding the current book and says so.
+- Removing an author in settings also clears their cached catalogue.
+
 ## [1.2.0] - 2026-11-03
 
 ### Added

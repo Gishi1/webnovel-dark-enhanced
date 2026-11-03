@@ -35,6 +35,16 @@
   }
 
   function setupObservers() {
+    try {
+      chrome.runtime.onMessage.addListener((message) => {
+        if (message && message.type === 'wne:sync-authors' && WNE.authorBooks && settings) {
+          WNE.authorBooks.maybeSync(settings.filters.blockAuthors, { force: true });
+        }
+      });
+    } catch (_) {
+      /* not every context has runtime messaging */
+    }
+
     // The MAIN-world hook fires this for pushState/replaceState.
     window.addEventListener('wne:navigation', (event) => {
       const detail = event.detail || {};
@@ -72,6 +82,13 @@
     WNE.cleanup.init();
     WNE.listing.init();
     WNE.reader.init();
+    if (WNE.authorBooks) {
+      WNE.authorBooks.onChange(() => applyAll());
+      setTimeout(() => WNE.authorBooks.maybeSync(settings.filters.blockAuthors), 5000);
+      setInterval(() => {
+        if (settings) WNE.authorBooks.maybeSync(settings.filters.blockAuthors);
+      }, 60 * 60 * 1000);
+    }
     if (WNE.toc) WNE.toc.init();
     if (WNE.inline) WNE.inline.init();
     applyAll();
@@ -81,6 +98,7 @@
   (async function boot() {
     try {
       settings = await WNE.settings.load();
+      if (WNE.authorBooks) await WNE.authorBooks.load();
     } catch (error) {
       console.error('[WebNovel+] settings failed to load', error);
       settings = WNE.merge(WNE.DEFAULTS, {});

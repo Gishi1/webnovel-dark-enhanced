@@ -206,6 +206,18 @@ async function removeValue(listPath, value) {
     filters: { [key]: current.filters[key].filter((entry) => entry !== value) }
   };
   await WNE.settings.save(patch);
+  if (key === 'blockAuthors') {
+    try {
+      const stored = await chrome.storage.local.get('wne.authorBooks');
+      const map = stored['wne.authorBooks'];
+      if (map && map[value.toLowerCase()]) {
+        delete map[value.toLowerCase()];
+        await chrome.storage.local.set({ 'wne.authorBooks': map });
+      }
+    } catch (_) {
+      /* cache cleanup is best effort */
+    }
+  }
   flashSaved('Removed');
   settings = WNE.settings.get();
   renderChipsAll(settings);
