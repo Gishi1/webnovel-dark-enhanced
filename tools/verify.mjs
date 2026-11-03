@@ -30,6 +30,14 @@ const send = (method, params = {}) => { const i = ++id; ws.send(JSON.stringify({
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 await send('Runtime.enable'); await send('Log.enable'); await send('Page.enable');
+if (process.env.VIEW_W) {
+  await send('Emulation.setDeviceMetricsOverride', {
+    width: Number(process.env.VIEW_W),
+    height: Number(process.env.VIEW_H || 1000),
+    deviceScaleFactor: 1,
+    mobile: false
+  });
+}
 await send('Page.navigate', { url });
 await sleep(waitMs);
 const expression = await fs.readFile(checkFile, 'utf8');

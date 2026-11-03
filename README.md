@@ -158,8 +158,10 @@ failures. Current status across home, listings, book page and reader: only the s
 ## Limitations
 
 - Does not bypass paywalls, locked chapters, coins or ads for account perks. It only changes presentation.
-- Logged-in-only surfaces (library, profile) are styled by the same global theme but were not part of the
-  automated visual regression set because the test browser is signed out.
+- Logged-in-only surfaces (library, profile, reading history) are styled by the same global theme, but they
+  were verified signed-out only.
+- The sign-in dialog is a cross-origin iframe (`#loginIfr`), so it keeps the site's own light form styling;
+  extensions cannot restyle cross-origin frames.
 - The site can change class names or CSS variables at any time; the theme is centralised in
   `src/styles/theme.css` so fixes stay small.
 - Reader chapter navigation depends on fetching `/book/<id>/catalog`; if the site rate-limits that page,

@@ -190,8 +190,14 @@ html[data-wne-theme] .cha-page,
 html[data-wne-theme] .m-down_app,
 html[data-wne-theme] .chapter-pop-tip,
 html[data-wne-theme] .g_tooltip._white::after,
-html[data-wne-theme] .ser-form {
+html[data-wne-theme] .ser-form,
+html[data-wne-theme] .lib-landing-demo {
   background-color: var(--wn-surface) !important;
+}
+
+html[data-wne-theme] .lib-landing-demo {
+  border: 1px solid var(--wn-border) !important;
+  border-radius: 12px;
 }
 
 html[data-wne-theme] .g_mod,
