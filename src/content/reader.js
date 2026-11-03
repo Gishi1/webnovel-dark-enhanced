@@ -13,7 +13,6 @@
     system: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
   };
   const POSITIONS_KEY = 'wne.positions';
-  const CHAPTER_TTL = 10 * 60 * 1000;
   const MAX_POSITIONS = 300;
 
   let settings = null;
@@ -23,7 +22,6 @@
   let progressLabel = null;
   let lastPath = '';
   let restoreAttempted = '';
-  const chapterCache = new Map();
 
   const isReader = () => U.pageType() === 'reader';
 
@@ -111,59 +109,18 @@
 
   /* ------------------------------------------------------------ navigation */
 
-  async function loadChapters(bookId) {
-    const cached = chapterCache.get(bookId);
-    if (cached && Date.now() - cached.ts < CHAPTER_TTL) return cached.entries;
-
-    const sessionKey = `wne.chapters.${bookId}`;
-    try {
-      const stored = JSON.parse(sessionStorage.getItem(sessionKey) || 'null');
-      if (stored && Date.now() - stored.ts < CHAPTER_TTL) {
-        chapterCache.set(bookId, stored);
-        return stored.entries;
-      }
-    } catch (_) {
-      /* ignore */
-    }
-
-    const response = await fetch(`/book/${bookId}/catalog`, {
-      credentials: 'include',
-      headers: { Accept: 'text/html' }
-    });
-    if (!response.ok) throw new Error(`catalog ${response.status}`);
-    const html = await response.text();
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-    const entries = [];
-    const seen = new Set();
-    for (const anchor of doc.querySelectorAll('a[href]')) {
-      const href = (anchor.getAttribute('href') || '').split(/[?#]/)[0];
-      if (!/^\/book\/[^/]+\/[^/]+_\d+$/.test(href)) continue;
-      if (seen.has(href)) continue;
-      seen.add(href);
-      entries.push({ href, title: U.normalizeText(anchor.getAttribute('title') || anchor.textContent) });
-    }
-    const record = { ts: Date.now(), entries };
-    chapterCache.set(bookId, record);
-    try {
-      sessionStorage.setItem(sessionKey, JSON.stringify(record));
-    } catch (_) {
-      /* quota */
-    }
-    return entries;
-  }
-
   async function navigate(direction) {
     const bookId = currentBookId();
     if (!bookId) return;
     try {
-      const entries = await loadChapters(bookId);
+      const data = await WNE.catalog.get(bookId);
+      const entries = data.flat;
       if (!entries.length) {
         toast('Could not read the chapter list for this book.');
         return;
       }
       const here = currentChapterPath();
       let index = entries.findIndex((entry) => entry.href === here);
-      if (index < 0) index = entries.findIndex((entry) => entry.href.split('?')[0] === here);
       if (index < 0) {
         toast('Current chapter is not in the chapter list.');
         return;

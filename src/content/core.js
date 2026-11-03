@@ -16,6 +16,7 @@
     WNE.cleanup.apply(settings);
     WNE.listing.apply(settings);
     WNE.reader.apply(settings);
+    if (WNE.toc) WNE.toc.apply(settings);
     document.documentElement.dataset.wneReady = '1';
   }
 
@@ -69,6 +70,7 @@
     WNE.cleanup.init();
     WNE.listing.init();
     WNE.reader.init();
+    if (WNE.toc) WNE.toc.init();
     applyAll();
     setupObservers();
   }

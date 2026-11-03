@@ -49,6 +49,10 @@ Rules run locally on every listing; nothing leaves the browser.
 - Width (narrow / medium / wide / full), font family (serif / sans / system), font size and line height.
 - Justify text, hide paragraph-comment markers, thin reading-progress bar.
 - `←` / `→` navigate chapters, `+` / `−` change the font size.
+- **Searchable table of contents**: the site's own catalog dialog never leaves its loading spinner
+  (verified for 30+ seconds, with and without the extension), so the reader button opens a dark,
+  searchable chapter list with volume grouping, the current chapter marked, locked-chapter badges and
+  type-to-filter. The catalog (~2 MB) is prefetched while you read, so opening it is instant.
 - Remembers your scroll position per book when you come back to a chapter.
 - Works alongside the site's own display-options dialog.
 
@@ -66,6 +70,10 @@ Rules run locally on every listing; nothing leaves the browser.
 | Search | Reader |
 | --- | --- |
 | ![Search](docs/screenshots/search-dark.png) | ![Reader](docs/screenshots/reader-dark.png) |
+
+| Table of contents |
+| --- |
+| ![Table of contents](docs/screenshots/toc-dark.png) |
 
 ## Install (unpacked)
 
@@ -111,13 +119,16 @@ src/
     main-world.js          MAIN-world history hook for SPA navigation
     theme.js               toggles data-wne-theme / accent attributes
     cleanup.js             removes consent, ads, nags, tooltips
+    catalog.js             shared chapter-catalog fetch/parse + session cache
     listing.js             card parsing, filtering, badges, filter bar
     reader.js              typography, progress, hotkeys, scroll memory
+    toc.js                 enhanced table of contents overlay
     core.js                boot, observers, route changes
   styles/
     theme.css              palette + site-variable overrides
     listing.css            card grid
     reader.css             reader chrome (progress, toast)
+    toc.css                table-of-contents overlay
     ui.css                 filter bar and block notice
   popup/                   toolbar popup
   options/                 full settings page
@@ -171,5 +182,5 @@ no white panels, no cookie banner, and zero extension exceptions (latest run: 10
   extensions cannot restyle cross-origin frames.
 - The site can change class names or CSS variables at any time; the theme is centralised in
   `src/styles/theme.css` so fixes stay small.
-- Reader chapter navigation depends on fetching `/book/<id>/catalog`; if the site rate-limits that page,
-  the arrow keys fall back to a toast instead of navigating.
+- Reader chapter navigation and the table of contents depend on fetching `/book/<id>/catalog`; if the site
+  rate-limits that page, the arrows show a toast and the TOC offers a retry (or the site's own dialog).

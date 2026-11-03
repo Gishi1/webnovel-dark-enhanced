@@ -56,14 +56,17 @@
         "src/common/settings.js",
         "src/content/theme.js",
         "src/content/cleanup.js",
+        "src/content/catalog.js",
         "src/content/listing.js",
         "src/content/reader.js",
+        "src/content/toc.js",
         "src/content/core.js"
       ],
       "css": [
         "src/styles/theme.css",
         "src/styles/listing.css",
         "src/styles/reader.css",
+        "src/styles/toc.css",
         "src/styles/ui.css"
       ],
       "run_at": "document_start"

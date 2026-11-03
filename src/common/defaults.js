@@ -52,6 +52,7 @@
       justify: false,
       progress: true,
       hotkeys: true,
+      enhancedToc: true,
       hideComments: true,
       rememberPosition: true
     }
