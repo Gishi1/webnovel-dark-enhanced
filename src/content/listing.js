@@ -105,6 +105,7 @@
   }
 
   function cardKind(li) {
+    if (li.closest('.ser-ret')) return 'search';
     if (li.classList.contains('fl')) return 'stories';
     if (li.querySelector('.g_book_item') || li.classList.contains('_6')) return 'tags';
     if (li.closest('ul.g_row._8')) return 'home';
@@ -210,7 +211,7 @@
 
     const kind = cardKind(li);
     li.dataset.wneCard = kind;
-    const styled = options.enhance && (kind === 'stories' || kind === 'tags');
+    const styled = options.enhance && (kind === 'stories' || kind === 'tags' || kind === 'search');
     li.classList.toggle('wne-card', styled);
     li.classList.toggle('wne-watched', !styled);
 
@@ -228,11 +229,12 @@
   function markContainers(cards) {
     const containers = new Set();
     for (const { li, kind } of cards) {
-      if (kind !== 'stories' && kind !== 'tags') continue;
+      if (kind !== 'stories' && kind !== 'tags' && kind !== 'search') continue;
       const parent = li.parentElement;
       if (!parent) continue;
       if (kind === 'stories' && parent.tagName === 'UL') containers.add(parent);
       if (kind === 'tags' && parent.classList.contains('g_row')) containers.add(parent);
+      if (kind === 'search' && parent.classList.contains('ser-ret')) containers.add(parent);
     }
     for (const container of containers) container.classList.add('wne-grid');
     return containers;

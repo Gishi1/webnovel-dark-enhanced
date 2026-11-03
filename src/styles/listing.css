@@ -71,6 +71,31 @@ html.wne-grid-on .wne-card[data-wne-card="stories"] > .pr > span.pa {
   left: auto !important;
 }
 
+/* Search results use their own row markup (.ser-ret). */
+html.wne-grid-on .wne-card[data-wne-card="search"] > a.g_thumb {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 3 / 4;
+  margin: 0 0 8px !important;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+html.wne-grid-on .wne-card[data-wne-card="search"] > a.g_thumb img {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+}
+
+html.wne-grid-on .wne-card[data-wne-card="search"] h3 {
+  padding-left: 0 !important;
+}
+
 /* Tags page: same idea, with the image container no longer absolute. */
 html.wne-grid-on .wne-card[data-wne-card="tags"] > .g_book_item {
   padding: 0 !important;
