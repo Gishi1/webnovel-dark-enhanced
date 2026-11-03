@@ -1,0 +1,480 @@
+/* ==========================================================================
+   WebNovel Dark & Enhanced - theme
+   The site defines almost every colour as a CSS custom property on :root.
+   Re-declaring those variables on html[data-wne-theme] wins by specificity,
+   so the theme survives stylesheet order and lazy-loaded chunks.
+   ========================================================================== */
+
+html[data-wne-theme="dark"] {
+  --wn-bg: #0b0d12;
+  --wn-surface: #12151d;
+  --wn-surface-2: #171b24;
+  --wn-surface-3: #1f2531;
+  --wn-text: #e7e9f0;
+  --wn-text-dim: #b3b9c7;
+  --wn-muted: #868da0;
+  --wn-faint: #5f6678;
+  --wn-border: #262c3a;
+  --wn-border-soft: #1d2230;
+  --wn-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  color-scheme: dark;
+}
+
+html[data-wne-theme="midnight"] {
+  --wn-bg: #000000;
+  --wn-surface: #080a0f;
+  --wn-surface-2: #0d1017;
+  --wn-surface-3: #151a24;
+  --wn-text: #e9ebf2;
+  --wn-text-dim: #b0b6c4;
+  --wn-muted: #7f8698;
+  --wn-faint: #565d6e;
+  --wn-border: #1e2431;
+  --wn-border-soft: #141922;
+  --wn-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  color-scheme: dark;
+}
+
+html[data-wne-theme="dim"] {
+  --wn-bg: #171a20;
+  --wn-surface: #1e222a;
+  --wn-surface-2: #242934;
+  --wn-surface-3: #2d3340;
+  --wn-text: #d9dce4;
+  --wn-text-dim: #a8aebc;
+  --wn-muted: #868da0;
+  --wn-faint: #666d7d;
+  --wn-border: #333a48;
+  --wn-border-soft: #2a303b;
+  --wn-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  color-scheme: dark;
+}
+
+html[data-wne-accent="blue"] {
+  --wn-accent: #6b93ff;
+  --wn-accent-strong: #9db8ff;
+  --wn-accent-soft: rgba(107, 147, 255, 0.14);
+}
+
+html[data-wne-accent="violet"] {
+  --wn-accent: #a78bfa;
+  --wn-accent-strong: #c4b1fd;
+  --wn-accent-soft: rgba(167, 139, 250, 0.16);
+}
+
+html[data-wne-accent="teal"] {
+  --wn-accent: #2dd4bf;
+  --wn-accent-strong: #6ee7d8;
+  --wn-accent-soft: rgba(45, 212, 191, 0.14);
+}
+
+html[data-wne-accent="rose"] {
+  --wn-accent: #fb7185;
+  --wn-accent-strong: #fda4af;
+  --wn-accent-soft: rgba(251, 113, 133, 0.14);
+}
+
+/* --------------------------------------------------------------------------
+   Site palette -> extension palette
+   -------------------------------------------------------------------------- */
+
+html[data-wne-theme] {
+  --c_primary: var(--wn-accent);
+  --c_primary_light: var(--wn-accent-strong);
+  --c_primary_lighter: var(--wn-accent-strong);
+  --c_primary_dk: var(--wn-accent);
+  --c_trans_primary: var(--wn-accent-soft);
+  --c_trans_primary_light: var(--wn-accent-soft);
+  --c_trans_primary_lighter: var(--wn-surface-3);
+
+  --c_l: var(--wn-text);
+  --c_m: var(--wn-text-dim);
+  --c_s: var(--wn-muted);
+  --c_xs: var(--wn-faint);
+  --c_dark: var(--wn-text);
+  --c_dark_secondary: var(--wn-text);
+  --c_dark_bts: var(--wn-text-dim);
+
+  --c_border: var(--wn-border);
+  --c_border_light: var(--wn-border);
+  --c_border_dark: var(--wn-border-soft);
+
+  --bc_primary_light: var(--wn-surface);
+  --bc_primary_lighter: var(--wn-surface-2);
+  --bc_primary_i: var(--wn-surface-3);
+  --bc_primary_i_light: var(--wn-accent-soft);
+  --bc_surface_lighter: var(--wn-surface-3);
+  --bc_gray: var(--wn-border);
+  --bc_gray_i: var(--wn-border-soft);
+  --bc_gray_light: var(--wn-surface-2);
+  --bc_gray_light_hover: var(--wn-surface-3);
+  --bc_gray_hover: var(--wn-muted);
+  --bc_ph: var(--wn-surface-2);
+  --bc_ph_light: var(--wn-surface-2);
+  --bc_primary_dark: var(--wn-surface);
+  --bc_primary_darker: var(--wn-surface-2);
+  --bc_primary_darkest: #07080c;
+  --bc_hover: rgba(255, 255, 255, 0.08);
+  --bc_hover_light: rgba(255, 255, 255, 0.06);
+  --bc_disabled: rgba(255, 255, 255, 0.1);
+  --bc_mask: rgba(0, 0, 0, 0.66);
+  --bc_overlay: rgba(0, 0, 0, 0.82);
+  --bc_dark: var(--wn-surface-3);
+  --bc_darker: var(--wn-surface-2);
+  --bc_dark_primary: var(--wn-surface);
+  --bc_dark_secondary: linear-gradient(90deg, var(--wn-accent), var(--wn-accent-strong));
+  --c_quaternary: #34d399;
+}
+
+/* --------------------------------------------------------------------------
+   Page chrome
+   -------------------------------------------------------------------------- */
+
+html[data-wne-theme],
+html[data-wne-theme] body {
+  background-color: var(--wn-bg) !important;
+}
+
+html[data-wne-theme] body {
+  color: var(--wn-text) !important;
+}
+
+html[data-wne-theme] .page {
+  background-color: var(--wn-bg) !important;
+}
+
+html[data-wne-theme] .g_header {
+  background-color: var(--wn-surface) !important;
+  border-bottom-color: var(--wn-border) !important;
+  box-shadow: 0 1px 0 var(--wn-border-soft);
+}
+
+html[data-wne-theme] .g_header_ph {
+  background-color: transparent !important;
+}
+
+html[data-wne-theme] .cha-header {
+  background-color: var(--wn-surface) !important;
+  border-bottom: 1px solid var(--wn-border) !important;
+}
+
+html[data-wne-theme] .g_footer {
+  background-color: #07080c !important;
+}
+
+/* --------------------------------------------------------------------------
+   Surfaces
+   -------------------------------------------------------------------------- */
+
+html[data-wne-theme] .bc_fff,
+html[data-wne-theme] ._white,
+html[data-wne-theme] .bc_light_default,
+html[data-wne-theme] .bc_surface_lighter,
+html[data-wne-theme] .g_drop_bd,
+html[data-wne-theme] .g_drop,
+html[data-wne-theme] .g_drop_bd::after,
+html[data-wne-theme] .g_drop::after,
+html[data-wne-theme] .g_mod,
+html[data-wne-theme] .g_mod_img,
+html[data-wne-theme] .g_mod_chat_bd,
+html[data-wne-theme] .g_mod_chat_hd,
+html[data-wne-theme] .g_mod_chat_ft,
+html[data-wne-theme] .g_mod_chat_book,
+html[data-wne-theme] .g_mod_chat_book + .g_mod_chat_bd,
+html[data-wne-theme] .ui-select-button,
+html[data-wne-theme] .ui-select-datalist,
+html[data-wne-theme] .ui-select-datalist-li,
+html[data-wne-theme] .cha-modal,
+html[data-wne-theme] .cha-modal-bd,
+html[data-wne-theme] .cha-page,
+html[data-wne-theme] .m-down_app,
+html[data-wne-theme] .chapter-pop-tip,
+html[data-wne-theme] .g_tooltip._white::after,
+html[data-wne-theme] .ser-form {
+  background-color: var(--wn-surface) !important;
+}
+
+html[data-wne-theme] .g_mod,
+html[data-wne-theme] .cha-modal,
+html[data-wne-theme] .g_drop_bd,
+html[data-wne-theme] .ui-select-datalist {
+  border-color: var(--wn-border) !important;
+  box-shadow: var(--wn-shadow) !important;
+}
+
+html[data-wne-theme] .cha-page {
+  border-color: var(--wn-border) !important;
+  box-shadow: var(--wn-shadow);
+}
+
+/* The site's own reader themes (yellow/sepia and "dark") are bypassed on
+   purpose: they set hardcoded greys that clash with our palette. */
+html[data-wne-theme] ._color2 .cha-page,
+html[data-wne-theme] ._color3 .cha-page {
+  background-color: var(--wn-surface) !important;
+  border-color: var(--wn-border) !important;
+}
+
+html[data-wne-theme] .g_thumb,
+html[data-wne-theme] .g_thumb_bg,
+html[data-wne-theme] .m-book .g_thumb {
+  background-color: var(--wn-surface-3) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Text
+   -------------------------------------------------------------------------- */
+
+html[data-wne-theme] .c_000,
+html[data-wne-theme] .c_l,
+html[data-wne-theme] .c_dark,
+html[data-wne-theme] .c_dark_secondary {
+  color: var(--wn-text) !important;
+}
+
+html[data-wne-theme] .c_m {
+  color: var(--wn-text-dim) !important;
+}
+
+html[data-wne-theme] .c_s {
+  color: var(--wn-muted) !important;
+}
+
+html[data-wne-theme] .c_xs {
+  color: var(--wn-faint) !important;
+}
+
+html[data-wne-theme] .c_primary {
+  color: var(--wn-accent) !important;
+}
+
+/* Elements whose colour is hardcoded in page-level chunks. */
+html[data-wne-theme] .det-hd,
+html[data-wne-theme] .det-hd .fw700,
+html[data-wne-theme] .det-hd strong,
+html[data-wne-theme] .det-hd-tag,
+html[data-wne-theme] .det-tab-nav a,
+html[data-wne-theme] .det-tab-nav a._on,
+html[data-wne-theme] .det-tab-nav,
+html[data-wne-theme] .g_pagi a,
+html[data-wne-theme] .ui-page,
+html[data-wne-theme] .g_tab_nav a,
+html[data-wne-theme] .g_tab_nav a.*,
+html[data-wne-theme] .lst-nav a,
+html[data-wne-theme] .lst-nav a *,
+html[data-wne-theme] .det-tab-nav a,
+html[data-wne-theme] .det-tab-nav a * {
+  color: var(--wn-text) !important;
+}
+
+html[data-wne-theme] .lst-nav a._on,
+html[data-wne-theme] .lst-nav a._on *,
+html[data-wne-theme] .det-tab-nav a._on,
+html[data-wne-theme] .det-tab-nav a._on *,
+html[data-wne-theme] .g_tab_nav a._on,
+html[data-wne-theme] .g_tab_nav a._on * {
+  color: var(--wn-accent) !important;
+}
+
+html[data-wne-theme] .det-hd-detail,
+html[data-wne-theme] .det-hd-detail *,
+html[data-wne-theme] .g_pagi,
+html[data-wne-theme] .g_pagi *,
+html[data-wne-theme] .ui-page-x,
+html[data-wne-theme] .ui-page-x * {
+  color: var(--wn-text) !important;
+}
+
+/* Segmented gender switch: the active label is a hardcoded white pill. */
+html[data-wne-theme] .m-switch label {
+  background-color: transparent !important;
+  color: var(--wn-text-dim) !important;
+}
+
+html[data-wne-theme] .m-switch-0:checked ~ .m-switch label:first-child,
+html[data-wne-theme] .m-switch-1:checked ~ .m-switch label:not(:first-child) {
+  background-color: var(--wn-accent) !important;
+  color: #0b0d12 !important;
+}
+
+html[data-wne-theme] a:hover .c_l,
+html[data-wne-theme] a:hover {
+  color: var(--wn-accent-strong);
+}
+
+/* --------------------------------------------------------------------------
+   Forms, tables, misc chrome
+   -------------------------------------------------------------------------- */
+
+html[data-wne-theme] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+html[data-wne-theme] textarea,
+html[data-wne-theme] select {
+  background-color: var(--wn-surface-2) !important;
+  color: var(--wn-text) !important;
+  border-color: var(--wn-border) !important;
+}
+
+html[data-wne-theme] input::placeholder,
+html[data-wne-theme] textarea::placeholder {
+  color: var(--wn-faint) !important;
+}
+
+html[data-wne-theme] .g_hr,
+html[data-wne-theme] .cha-hr,
+html[data-wne-theme] hr {
+  border-color: var(--wn-border) !important;
+}
+
+html[data-wne-theme] .g_mod_wrap,
+html[data-wne-theme] .cha-modal-wrap {
+  background-color: rgba(0, 0, 0, 0.66) !important;
+}
+
+html[data-wne-theme] .g_loading i {
+  border-color: var(--wn-accent) transparent var(--wn-accent) transparent !important;
+}
+
+/* Tag links use a dark red that is hard to read on our surfaces. */
+html[data-wne-theme] a[href*="/tags/"] {
+  color: #ff8aa2;
+}
+
+/* Ranking badges: white on orange is below AA at this size. */
+html[data-wne-theme] .rank-tag {
+  color: #3d1400 !important;
+}
+
+/* Star ratings (the site hardcodes a black fill for the star glyph). */
+html[data-wne-theme] .g_star path,
+html[data-wne-theme] .g_star_num path,
+html[data-wne-theme] .g_star_edit path {
+  fill: #fbbf24 !important;
+}
+
+/* --------------------------------------------------------------------------
+   Reader
+   -------------------------------------------------------------------------- */
+
+html[data-wne-theme] .cha-content,
+html[data-wne-theme] .cha-words,
+html[data-wne-theme] .cha-page,
+html[data-wne-theme] .cha-info,
+html[data-wne-theme] .cha-tit,
+html[data-wne-theme] .cha-lst,
+html[data-wne-theme] .cha-lst a {
+  color: var(--wn-text) !important;
+}
+
+html[data-wne-theme] .cha-paragraph:hover {
+  background-color: rgba(255, 255, 255, 0.035) !important;
+}
+
+html[data-wne-theme] .cha-fly {
+  background-color: var(--wn-surface-2) !important;
+  border-left: 1px solid var(--wn-border);
+}
+
+html[data-wne-theme] .cha-tools a {
+  color: var(--wn-muted) !important;
+}
+
+html[data-wne-theme] .cha-tools a:hover,
+html[data-wne-theme] .cha-tools a._on {
+  color: var(--wn-text) !important;
+  background: var(--wn-surface-3) !important;
+}
+
+html[data-wne-theme] .cha-header .g_hd_link,
+html[data-wne-theme] .cha-hd-mn-text,
+html[data-wne-theme] .cha-hd-progress {
+  color: var(--wn-text) !important;
+}
+
+html[data-wne-theme] .cha-hd-mn-text a {
+  color: var(--wn-text) !important;
+}
+
+html[data-wne-theme] .chapter-pop-tip {
+  border: 1px solid var(--wn-border) !important;
+}
+
+/* Paragraph-comment markers are visual noise; the reader setting hides them. */
+html.wne-hide-para-comments .chapter_content .para-comment_num,
+html.wne-hide-para-comments .chapter_content .j_open_para_comment,
+html.wne-hide-para-comments .chapter_content .para-comment,
+html.wne-hide-para-comments .chapter_content .j_para_comment_count {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   Cleanup (class-driven so the elements never paint at all)
+   -------------------------------------------------------------------------- */
+
+html.wne-hide-cookie #didomi-host,
+html.wne-hide-cookie .didomi-host,
+html.wne-hide-cookie .didomi-consent-popup,
+html.wne-hide-cookie #didomi-notice,
+html.wne-hide-cookie .didomi-notice-banner {
+  display: none !important;
+}
+
+html.wne-hide-app #downAppModWrap,
+html.wne-hide-app #downAppMod,
+html.wne-hide-app .m_down_app_wrap,
+html.wne-hide-app .m_down_app_mask {
+  display: none !important;
+}
+
+html.wne-hide-ads [id^="googleads-"],
+html.wne-hide-ads [id^="google-ads-"],
+html.wne-hide-ads .adsbygoogle,
+html.wne-hide-ads ins.adsbygoogle {
+  display: none !important;
+}
+
+html.wne-hide-promos #chargeGetMoreModal,
+html.wne-hide-promos .g_charge-get-more-mod {
+  display: none !important;
+}
+
+html.wne-hide-para-tip .chapter-pop-tip,
+html.wne-hide-para-tip .j_para_comment_tip {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   Polish
+   -------------------------------------------------------------------------- */
+
+html[data-wne-theme] ::selection {
+  background: var(--wn-accent-soft);
+  color: var(--wn-text);
+}
+
+html[data-wne-theme] ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+html[data-wne-theme] ::-webkit-scrollbar-track {
+  background: var(--wn-bg);
+}
+
+html[data-wne-theme] ::-webkit-scrollbar-thumb {
+  background: var(--wn-surface-3);
+  border: 3px solid var(--wn-bg);
+  border-radius: 999px;
+}
+
+html[data-wne-theme] ::-webkit-scrollbar-thumb:hover {
+  background: #3a4152;
+}
+
+html[data-wne-theme] :focus-visible {
+  outline: 2px solid var(--wn-accent);
+  outline-offset: 2px;
+}
+
+html.wne-dim-images img {
+  filter: brightness(0.88) saturate(0.95);
+}

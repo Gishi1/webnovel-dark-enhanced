@@ -1,0 +1,295 @@
+/* ==========================================================================
+   Card layout for listing pages (/stories, /tags/*, search results).
+   Only active while html.wne-cards-on is present, so toggling the feature
+   instantly restores the site's own layout.
+   ========================================================================== */
+
+html.wne-cards-on .wne-card {
+  float: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 12px !important;
+  box-sizing: border-box !important;
+  position: relative;
+  list-style: none;
+  background: var(--wn-surface);
+  border: 1px solid var(--wn-border-soft);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+html.wne-cards-on .wne-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--wn-border);
+  box-shadow: var(--wn-shadow);
+}
+
+/* --------------------------------------------------------------------------
+   Grid containers
+   -------------------------------------------------------------------------- */
+
+html.wne-grid-on .wne-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)) !important;
+  gap: 16px !important;
+  width: 100% !important;
+  margin: 0 0 24px !important;
+  padding: 0 !important;
+  list-style: none !important;
+  float: none !important;
+  box-sizing: border-box !important;
+}
+
+/* The stories page anchors every card's image absolutely inside a fixed-height
+   wrapper. Turn that into a normal vertical flow. */
+html.wne-grid-on .wne-card[data-wne-card="stories"] > .pr {
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px;
+  flex: 1 1 auto;
+  box-sizing: border-box !important;
+}
+
+html.wne-grid-on .wne-card[data-wne-card="stories"] > .pr > span.pa {
+  position: static !important;
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  margin: 0 !important;
+  top: auto !important;
+  left: auto !important;
+}
+
+/* Tags page: same idea, with the image container no longer absolute. */
+html.wne-grid-on .wne-card[data-wne-card="tags"] > .g_book_item {
+  padding: 0 !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px;
+  flex: 1 1 auto;
+}
+
+html.wne-grid-on .wne-card[data-wne-card="tags"] > .g_book_item > a {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px;
+}
+
+html.wne-grid-on .wne-card[data-wne-card="tags"] i.g_thumb {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 3 / 4;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* The site absolutely positions the cover inside the <i>; keep it absolute,
+   but against the sized container so the title and tags flow underneath. */
+html.wne-grid-on .wne-card[data-wne-card="tags"] i.g_thumb img {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  aspect-ratio: auto;
+  object-fit: cover;
+}
+
+/* --------------------------------------------------------------------------
+   Covers
+   -------------------------------------------------------------------------- */
+
+html.wne-cards-on .wne-card img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 10px;
+  background: var(--wn-surface-3);
+}
+
+/* --------------------------------------------------------------------------
+   Card content
+   -------------------------------------------------------------------------- */
+
+html.wne-cards-on .wne-card h3,
+html.wne-cards-on .wne-card h4 {
+  margin: 0 !important;
+  font-size: 15px !important;
+  line-height: 1.35 !important;
+  font-weight: 700 !important;
+  color: var(--wn-text) !important;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+html.wne-cards-on .wne-card h3 a,
+html.wne-cards-on .wne-card h4 a {
+  color: inherit !important;
+}
+
+html.wne-cards-on .wne-card h3 a:hover,
+html.wne-cards-on .wne-card h4 a:hover {
+  color: var(--wn-accent-strong) !important;
+}
+
+/* Tag chips */
+html.wne-cards-on .wne-card p a[href*="/tags/"] {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 7px;
+  margin: 0 5px 5px 0;
+  border-radius: 999px;
+  background: var(--wn-surface-3);
+  color: var(--wn-text-dim) !important;
+  font-size: 10px !important;
+  line-height: 1.7 !important;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+html.wne-cards-on .wne-card p a[href*="/tags/"]:hover {
+  background: var(--wn-accent-soft);
+  color: var(--wn-accent-strong) !important;
+}
+
+/* Description */
+html.wne-cards-on .wne-card p {
+  margin: 0 !important;
+  color: var(--wn-muted) !important;
+  font-size: 12.5px !important;
+  line-height: 1.5 !important;
+}
+
+html.wne-cards-on .wne-card p.ells,
+html.wne-cards-on .wne-card p.ell {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+html.wne-cards-on .wne-card p.df.aic {
+  margin-top: auto !important;
+  padding-top: 8px;
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  color: var(--wn-muted) !important;
+  font-size: 12px !important;
+}
+
+/* --------------------------------------------------------------------------
+   Badge and quick-hide button
+   -------------------------------------------------------------------------- */
+
+.wne-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(8, 10, 16, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #ffd166;
+  font: 600 11px/1.6 "Nunito Sans", system-ui, sans-serif;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+
+.wne-badge[data-score="5"] {
+  color: #7ce3b1;
+  border-color: rgba(124, 227, 177, 0.4);
+}
+
+.wne-badge[data-score="4"] {
+  color: #9fd0ff;
+}
+
+.wne-hide {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 4;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 50%;
+  background: rgba(8, 10, 16, 0.72);
+  color: #d7dbe6;
+  font: 700 14px/1 "Nunito Sans", system-ui, sans-serif;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.15s ease, transform 0.15s ease, background 0.15s ease;
+}
+
+html.wne-cards-on .wne-card:hover .wne-hide,
+html.wne-cards-on .wne-card:focus-within .wne-hide {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.wne-hide:hover {
+  background: #b3354b;
+  border-color: #d04861;
+  color: #fff;
+}
+
+.wne-hide:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* --------------------------------------------------------------------------
+   Filtered state
+   -------------------------------------------------------------------------- */
+
+html[data-wne-hide-mode="hide"] .wne-filtered {
+  display: none !important;
+}
+
+html[data-wne-hide-mode="dim"] .wne-filtered-dim {
+  opacity: 0.4;
+  filter: saturate(0.45);
+}
+
+html.wne-reveal .wne-filtered-dim {
+  opacity: 1;
+  filter: none;
+}
+
+/* "Show all" must also bring back cards filtered in hide mode. */
+html.wne-reveal .wne-filtered-hide {
+  display: flex !important;
+  opacity: 0.55;
+  filter: saturate(0.5);
+}
+
+html[data-wne-hide-mode="dim"] .wne-filtered-dim:hover {
+  opacity: 0.85;
+}

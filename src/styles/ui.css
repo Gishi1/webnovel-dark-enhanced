@@ -1,0 +1,98 @@
+/* ==========================================================================
+   Shared in-page chrome: filter bar, block notice. All of it is visual-only
+   and carries .wne-ui so cleanup and page code never mistake it for site DOM.
+   ========================================================================== */
+
+.wne-filterbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 16px;
+  padding: 9px 12px;
+  border: 1px solid var(--wn-border, #262c3a);
+  border-radius: 10px;
+  background: var(--wn-surface, #12151d);
+  color: var(--wn-text-dim, #b3b9c7);
+  font: 500 13px/1.45 "Nunito Sans", system-ui, sans-serif;
+}
+
+.wne-filterbar__text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.wne-filterbar__btn {
+  flex: none;
+  padding: 4px 11px;
+  border-radius: 7px;
+  border: 1px solid var(--wn-border, #262c3a);
+  background: var(--wn-surface-2, #171b24);
+  color: var(--wn-text, #e7e9f0);
+  font: 600 12px/1.5 "Nunito Sans", system-ui, sans-serif;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.wne-filterbar__btn:hover {
+  background: var(--wn-surface-3, #1f2531);
+  border-color: var(--wn-accent, #6b93ff);
+}
+
+.wne-filterbar__btn--ghost {
+  background: transparent;
+  color: var(--wn-muted, #868da0);
+}
+
+.wne-filterbar[data-state="active"] {
+  border-color: var(--wn-accent-soft, rgba(107, 147, 255, 0.14));
+}
+
+.wne-filterbar[data-state="active"] .wne-filterbar__text {
+  color: var(--wn-text, #e7e9f0);
+}
+
+.wne-notice {
+  position: fixed;
+  left: 50%;
+  top: 14px;
+  transform: translateX(-50%);
+  z-index: 2147483000;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: min(92vw, 620px);
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #d04861;
+  background: #2a1118;
+  color: #ffd7de;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  font: 500 13px/1.5 "Nunito Sans", system-ui, sans-serif;
+}
+
+.wne-notice__btn {
+  flex: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid #d04861;
+  background: transparent;
+  color: #ffd7de;
+  font: 600 12px/1.5 "Nunito Sans", system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.wne-notice__btn:hover {
+  background: #d04861;
+  color: #fff;
+}
+
+/* Small screens: keep the bar readable and out of the way. */
+@media (max-width: 640px) {
+  .wne-filterbar {
+    flex-wrap: wrap;
+  }
+
+  .wne-filterbar__text {
+    flex: 1 1 100%;
+  }
+}

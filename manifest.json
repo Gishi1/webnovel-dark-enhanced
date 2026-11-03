@@ -1,0 +1,72 @@
+{
+  "manifest_version": 3,
+  "name": "WebNovel Dark & Enhanced",
+  "short_name": "WebNovel+",
+  "version": "1.0.0",
+  "description": "A proper dark theme, a decluttered layout, book filters and a better reader for webnovel.com.",
+  "author": "Gishi",
+  "minimum_chrome_version": "111",
+  "permissions": ["storage"],
+  "host_permissions": ["https://www.webnovel.com/*"],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "action": {
+    "default_title": "WebNovel Dark & Enhanced",
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "options_ui": {
+    "page": "src/options/options.html",
+    "open_in_tab": true
+  },
+  "commands": {
+    "toggle-theme": {
+      "suggested_key": { "default": "Alt+Shift+D" },
+      "description": "Toggle the dark theme on or off"
+    },
+    "open-options": {
+      "suggested_key": { "default": "Alt+Shift+O" },
+      "description": "Open WebNovel Dark & Enhanced settings"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.webnovel.com/*"],
+      "js": ["src/content/main-world.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["https://www.webnovel.com/*"],
+      "js": [
+        "src/common/defaults.js",
+        "src/common/util.js",
+        "src/common/settings.js",
+        "src/content/theme.js",
+        "src/content/cleanup.js",
+        "src/content/listing.js",
+        "src/content/reader.js",
+        "src/content/core.js"
+      ],
+      "css": [
+        "src/styles/theme.css",
+        "src/styles/listing.css",
+        "src/styles/reader.css",
+        "src/styles/ui.css"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}

@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WebNovel Dark &amp; Enhanced — Settings</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <svg viewBox="0 0 64 64" width="30" height="30" aria-hidden="true">
+            <defs>
+              <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#6b93ff" />
+                <stop offset="1" stop-color="#2dd4bf" />
+              </linearGradient>
+            </defs>
+            <rect x="2" y="2" width="60" height="60" rx="16" fill="#12151d" />
+            <path d="M16 18h13a5 5 0 0 1 5 5v24a4 4 0 0 0-4-4H16z" fill="url(#g)" />
+            <path d="M48 18H35a5 5 0 0 0-5 5v24a4 4 0 0 1 4-4h14z" fill="url(#g)" opacity="0.72" />
+            <path d="M32 20v27" stroke="#0b0d12" stroke-width="2.4" />
+          </svg>
+          <div>
+            <strong>WebNovel+</strong>
+            <small>Settings</small>
+          </div>
+        </div>
+        <nav>
+          <a href="#appearance">Appearance</a>
+          <a href="#cleanup">Cleanup</a>
+          <a href="#listings">Listings</a>
+          <a href="#filters">Filters</a>
+          <a href="#reader">Reader</a>
+          <a href="#data">Backup</a>
+        </nav>
+        <div class="sidebar-foot">
+          <span id="savedPill" class="saved" aria-live="polite"></span>
+          <span class="version" id="version"></span>
+        </div>
+      </aside>
+
+      <main class="content">
+        <header class="page-head">
+          <div>
+            <h1>WebNovel Dark &amp; Enhanced</h1>
+            <p>Dark theme, decluttered pages, book filters and a reader that respects your eyes.</p>
+          </div>
+          <label class="switch big" title="Enable the extension">
+            <input id="enabled" type="checkbox" />
+            <span class="track"><span class="thumb"></span></span>
+          </label>
+        </header>
+
+        <section id="appearance" class="panel">
+          <h2>Appearance</h2>
+          <p class="sub">The theme is applied to every webnovel.com page, including the reader.</p>
+
+          <div class="field">
+            <span class="label">Theme</span>
+            <div class="seg" id="themeMode">
+              <button type="button" data-mode="off">Off</button>
+              <button type="button" data-mode="dark">Dark</button>
+              <button type="button" data-mode="midnight">Midnight</button>
+              <button type="button" data-mode="dim">Dim</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <span class="label">Accent colour</span>
+            <div class="dots" id="accent">
+              <button type="button" data-accent="blue" title="Blue"></button>
+              <button type="button" data-accent="violet" title="Violet"></button>
+              <button type="button" data-accent="teal" title="Teal"></button>
+              <button type="button" data-accent="rose" title="Rose"></button>
+            </div>
+          </div>
+
+          <label class="toggle">
+            <span>
+              <strong>Dim cover images</strong>
+              <small>Slightly reduces image brightness at night.</small>
+            </span>
+            <span class="switch"><input type="checkbox" data-path="theme.dimImages" /><span class="track"><span class="thumb"></span></span></span>
+          </label>
+        </section>
+
+        <section id="cleanup" class="panel">
+          <h2>Cleanup</h2>
+          <p class="sub">Remove the parts of the site that get in the way.</p>
+
+          <label class="toggle">
+            <span><strong>Cookie consent banner</strong><small>The full-width Didomi banner and its overlay.</small></span>
+            <span class="switch"><input type="checkbox" data-path="cleanup.cookieBanner" /><span class="track"><span class="thumb"></span></span></span>
+          </label>
+          <label class="toggle">
+            <span><strong>App download prompts</strong><small>The floating "Download Webnovel APP" card.</small></span>
+            <span class="switch"><input type="checkbox" data-path="cleanup.appDownload" /><span class="track"><span class="thumb"></span></span></span>
+          </label>
+          <label class="toggle">
+            <span><strong>Ad slots</strong><small>Empty AdSense containers between sections.</small></span>
+            <span class="switch"><input type="checkbox" data-path="cleanup.ads" /><span class="track"><span class="thumb"></span></span></span>
+          </label>
+          <label class="toggle">
+            <span><strong>Coin / promo modals</strong><small>Charge and "get more coins" dialogs.</small></span>
+            <span class="switch"><input type="checkbox" data-path="cleanup.promos" /><span class="track"><span class="thumb"></span></span></span>
+          </label>
+          <label class="toggle">
+            <span><strong>Header tooltips</strong><small>Removes the native browser tooltips from the top bar.</small></span>
+            <span class="switch"><input type="checkbox" data-path="cleanup.tooltips" /><span class="track"><span class="thumb"></span></span></span>
+          </label>
+          <label class="toggle">
+            <span><strong>Paragraph comment tooltip</strong><small>The "paragraph comment feature is now on the Web" popup.</small></span>
+            <span class="switch"><input type="checkbox" data-path="cleanup.paragraphTip" /><span class="track"><span class="thumb"></span></span></span>
+          </label>
+        </section>
+
+        <section id="listings" class="panel">
+          <h2>Listings</h2>
+          <p class="sub">Card layout and the way filtered books are treated.</p>
+
+          <label class="toggle">
+            <span><strong>Enhanced card layout</strong><small>Rebuilds /stories, /tags and search results as a cover grid.</small></span>
+            <span class="switch"><input type="checkbox" data-path="listing.enhance" /><span class="track"><span class="thumb"></span></span></span>
+          </label>
+          <label class="toggle">
+            <span><strong>Responsive grid</strong><small>Cards adapt to the window width instead of two fixed columns.</small></span>
+            <span class="switch"><input type="checkbox" data-path="listing.grid" /><span class="track"><span class="thumb"></span></span></span>
+          </label>
+          <label class="toggle">
+            <span><strong>Match badges</strong><small>Shows how many of your preferred tags a book has.</small></span>
+            <span class="switch"><input type="checkbox" data-path="listing.badges" /><span class="track"><span class="thumb"></span></span></span>
+          </label>
+          <label class="toggle">
+            <span><strong>Filter summary bar</strong><small>"N of M books filtered" above the list, with a reveal button.</small></span>
+            <span class="switch"><input type="checkbox" data-path="listing.filterBar" /><span class="track"><span class="thumb"></span></span></span>
+          </label>
+
+          <div class="field">
+            <label class="label" for="hideMode">Filtered books</label>
+            <select id="hideMode" data-path="listing.hideMode">
+              <option value="dim">Dim them (you can still click through)</option>
+              <option value="hide">Hide them completely</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="label" for="minRating">Minimum rating <span class="value" id="minRatingValue">off</span></label>
+            <input id="minRating" type="range" min="0" max="5" step="0.1" data-path="listing.minRating" />
+            <small class="help">0 disables the rating filter.</small>
+          </div>
+        </section>
+
+        <section id="filters" class="panel">
+          <h2>Filters</h2>
+          <p class="sub">Rules run on every listing; nothing is sent anywhere.</p>
+
+          <div class="field">
+            <span class="label">Hide books with these tags</span>
+            <div class="chips" data-chips="filters.hideTags" data-placeholder="e.g. yaoi"></div>
+          </div>
+
+          <div class="field">
+            <span class="label">Prefer books with these tags <span class="help">(adds a match badge)</span></span>
+            <div class="chips" data-chips="filters.preferTags" data-placeholder="e.g. romance"></div>
+          </div>
+
+          <div class="field">
+            <span class="label">Blocked authors</span>
+            <div class="chips" data-chips="filters.blockAuthors" data-placeholder="author name"></div>
+          </div>
+
+          <div class="field">
+            <span class="label">Hide descriptions containing these words</span>
+            <div class="chips" data-chips="filters.keywords" data-placeholder="e.g. gender bender"></div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="blockBooks">Blocked books</label>
+            <textarea id="blockBooks" rows="5" spellcheck="false" placeholder="One per line: book id, slug, or full URL"></textarea>
+            <small class="help">Example: <code>22196546206090805</code> or <code>/book/shadow-slave_22196546206090805</code></small>
+          </div>
+        </section>
+
+        <section id="reader" class="panel">
+          <h2>Reader</h2>
+          <p class="sub">Defaults for every chapter page. Arrow keys turn chapters once the chapter list is cached.</p>
+
+          <div class="grid-2">
+            <div class="field">
+              <label class="label" for="readerWidth">Page width</label>
+              <select id="readerWidth" data-path="reader.width">
+                <option value="narrow">Narrow (640px)</option>
+                <option value="medium">Medium (800px)</option>
+                <option value="wide">Wide (980px)</option>
+                <option value="full">Full width</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="label" for="readerFont">Font</label>
+              <select id="readerFont" data-path="reader.font">
+                <option value="serif">Serif (Merriweather)</option>
+                <option value="sans">Sans (Nunito)</option>
+                <option value="system">System UI</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="readerFontSize">Font size <span class="value" id="fontSizeValue">19px</span></label>
+            <input id="readerFontSize" type="range" min="14" max="30" step="1" data-path="reader.fontSize" />
+          </div>
+
+          <div class="field">
+            <label class="label" for="readerLineHeight">Line height <span class="value" id="lineHeightValue">1.75</span></label>
+            <input id="readerLineHeight" type="range" min="1.3" max="2.4" step="0.05" data-path="reader.lineHeight" />
+          </div>
+
+          <label class="toggle">
+            <span><strong>Justify text</strong><small>Align both edges of paragraphs.</small></span>
+            <span class="switch"><input type="checkbox" data-path="reader.justify" /><span class="track"><span class="thumb"></span></span></span>
+          </label>
+          <label class="toggle">
+            <span><strong>Progress bar</strong><small>Thin reading indicator inside the chapter header.</small></span>
+            <span class="switch"><input type="checkbox" data-path="reader.progress" /><span class="track"><span class="thumb"></span></span></span>
+          </label>
+          <label class="toggle">
+            <span><strong>Keyboard shortcuts</strong><small>← / → chapters, + / − font size.</small></span>
+            <span class="switch"><input type="checkbox" data-path="reader.hotkeys" /><span class="track"><span class="thumb"></span></span></span>
+          </label>
+          <label class="toggle">
+            <span><strong>Hide paragraph comment markers</strong><small>Removes the small numbers next to each paragraph.</small></span>
+            <span class="switch"><input type="checkbox" data-path="reader.hideComments" /><span class="track"><span class="thumb"></span></span></span>
+          </label>
+          <label class="toggle">
+            <span><strong>Remember my place</strong><small>Restores the scroll position when you reopen a chapter.</small></span>
+            <span class="switch"><input type="checkbox" data-path="reader.rememberPosition" /><span class="track"><span class="thumb"></span></span></span>
+          </label>
+        </section>
+
+        <section id="data" class="panel">
+          <h2>Backup</h2>
+          <p class="sub">Settings live in this browser profile. Export them to move devices.</p>
+          <div class="actions">
+            <button type="button" id="exportBtn">Export settings</button>
+            <label class="file-btn">
+              Import settings
+              <input type="file" id="importFile" accept="application/json" hidden />
+            </label>
+            <button type="button" id="resetBtn" class="danger">Reset everything</button>
+          </div>
+          <p class="help" id="dataStatus"></p>
+        </section>
+      </main>
+    </div>
+
+    <datalist id="tagSuggestions"></datalist>
+    <script src="../common/defaults.js"></script>
+    <script src="../common/settings.js"></script>
+    <script src="options.js"></script>
+  </body>
+</html>

@@ -1,0 +1,110 @@
+/* ==========================================================================
+   Reader page additions: progress bar, toast, reading flow.
+   Typography (font/size/line-height) is injected by reader.js into
+   #wne-reader-style because those values are user settings.
+   ========================================================================== */
+
+html[data-wne-reader] .cha-page-in {
+  padding: 1px clamp(18px, 4vw, 56px) 44px !important;
+}
+
+html[data-wne-reader] .cha-words {
+  margin-bottom: 32px !important;
+}
+
+html[data-wne-reader] .cha-paragraph {
+  margin-bottom: 0.55em;
+}
+
+html[data-wne-reader] .cha-tit h1 {
+  font-size: clamp(22px, 2.4vw, 30px) !important;
+  line-height: 1.35 !important;
+}
+
+/* Keep a comfortable measure even in "full" width on very wide screens. */
+@media (min-width: 1400px) {
+  html[data-wne-reader] .cha-page-in {
+    padding-left: clamp(24px, 6vw, 96px) !important;
+    padding-right: clamp(24px, 6vw, 96px) !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Reading progress
+   -------------------------------------------------------------------------- */
+
+.wne-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  z-index: 5;
+  background: transparent;
+  pointer-events: none;
+}
+
+.wne-progress--floating {
+  position: fixed;
+  top: 0;
+  bottom: auto;
+  height: 3px;
+  z-index: 2147483000;
+}
+
+.wne-progress__fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--wn-accent, #6b93ff), var(--wn-accent-strong, #9db8ff));
+  transition: width 0.12s linear;
+  border-radius: 0 3px 3px 0;
+}
+
+.wne-progress__label {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--wn-surface-2, #171b24);
+  border: 1px solid var(--wn-border, #262c3a);
+  color: var(--wn-muted, #868da0);
+  font: 600 10px/1.6 "Nunito Sans", system-ui, sans-serif;
+  opacity: 0;
+  transform: translateY(-2px);
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+}
+
+.wne-progress:hover .wne-progress__label,
+.cha-header:hover .wne-progress__label {
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Toast
+   -------------------------------------------------------------------------- */
+
+.wne-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translate(-50%, 16px);
+  z-index: 2147483000;
+  max-width: min(88vw, 420px);
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--wn-border, #262c3a);
+  background: var(--wn-surface, #12151d);
+  color: var(--wn-text, #e7e9f0);
+  box-shadow: var(--wn-shadow, 0 10px 30px rgba(0, 0, 0, 0.45));
+  font: 500 13px/1.5 "Nunito Sans", system-ui, sans-serif;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.wne-toast--on {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}

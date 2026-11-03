@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WebNovel Dark &amp; Enhanced</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="head">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="34" height="34">
+            <defs>
+              <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#6b93ff" />
+                <stop offset="1" stop-color="#2dd4bf" />
+              </linearGradient>
+            </defs>
+            <rect x="2" y="2" width="60" height="60" rx="16" fill="#12151d" />
+            <path d="M16 18h13a5 5 0 0 1 5 5v24a4 4 0 0 0-4-4H16z" fill="url(#g)" />
+            <path d="M48 18H35a5 5 0 0 0-5 5v24a4 4 0 0 1 4-4h14z" fill="url(#g)" opacity="0.72" />
+            <path d="M32 20v27" stroke="#0b0d12" stroke-width="2.4" />
+          </svg>
+        </div>
+        <div class="head-text">
+          <h1>WebNovel+</h1>
+          <p id="pageKind">Checking this tab…</p>
+        </div>
+        <label class="switch" title="Enable or disable the extension">
+          <input id="enabled" type="checkbox" />
+          <span class="track"><span class="thumb"></span></span>
+        </label>
+      </header>
+
+      <section class="card" id="themeCard">
+        <div class="card-head">
+          <h2>Theme</h2>
+          <span class="hint">Applies to every page</span>
+        </div>
+        <div class="seg" id="themeMode" role="group" aria-label="Theme mode">
+          <button type="button" data-mode="off">Off</button>
+          <button type="button" data-mode="dark">Dark</button>
+          <button type="button" data-mode="midnight">Midnight</button>
+          <button type="button" data-mode="dim">Dim</button>
+        </div>
+        <div class="row">
+          <span class="row-label">Accent</span>
+          <div class="dots" id="accent" role="group" aria-label="Accent colour">
+            <button type="button" data-accent="blue" title="Blue"></button>
+            <button type="button" data-accent="violet" title="Violet"></button>
+            <button type="button" data-accent="teal" title="Teal"></button>
+            <button type="button" data-accent="rose" title="Rose"></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <h2>On this page</h2>
+        </div>
+        <label class="toggle">
+          <span>
+            <strong>Hide cookie banner &amp; app nags</strong>
+            <small>Removes the consent wall and download popups</small>
+          </span>
+          <span class="switch">
+            <input type="checkbox" data-path="cleanup.cookieBanner" />
+            <span class="track"><span class="thumb"></span></span>
+          </span>
+        </label>
+        <label class="toggle">
+          <span>
+            <strong>Hide ad slots</strong>
+            <small>Removes empty Google AdSense boxes</small>
+          </span>
+          <span class="switch">
+            <input type="checkbox" data-path="cleanup.ads" />
+            <span class="track"><span class="thumb"></span></span>
+          </span>
+        </label>
+        <label class="toggle">
+          <span>
+            <strong>Card grid on listings</strong>
+            <small>Bigger covers, readable cards on /stories and /tags</small>
+          </span>
+          <span class="switch">
+            <input type="checkbox" data-path="listing.grid" />
+            <span class="track"><span class="thumb"></span></span>
+          </span>
+        </label>
+        <label class="toggle">
+          <span>
+            <strong>Reader progress bar</strong>
+            <small>Thin progress line inside the chapter header</small>
+          </span>
+          <span class="switch">
+            <input type="checkbox" data-path="reader.progress" />
+            <span class="track"><span class="thumb"></span></span>
+          </span>
+        </label>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <h2>Filters</h2>
+          <span class="hint" id="filterCount"></span>
+        </div>
+        <p class="muted" id="filterSummary">No filters configured yet.</p>
+        <button type="button" class="wide" id="openFilters">Edit tag &amp; book filters</button>
+      </section>
+
+      <footer class="foot">
+        <button type="button" id="openOptions">All settings</button>
+        <button type="button" id="reload">Reload page</button>
+        <span class="version" id="version"></span>
+      </footer>
+    </div>
+
+    <script src="../common/defaults.js"></script>
+    <script src="../common/settings.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
