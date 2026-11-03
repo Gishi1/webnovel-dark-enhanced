@@ -44,11 +44,11 @@ function render(settings) {
 
   const filters = settings.filters;
   const rows = [
-    ['hidden tag', filters.hideTags.length],
-    ['preferred tag', filters.preferTags.length],
-    ['blocked book', filters.blockBooks.length],
-    ['blocked author', filters.blockAuthors.length],
-    ['keyword', filters.keywords.length]
+    ['hidden tag', (filters.hideTags || []).length],
+    ['preferred tag', (filters.preferTags || []).length],
+    ['blocked book', (filters.blockBooks || []).length],
+    ['blocked author', (filters.blockAuthors || []).length],
+    ['keyword', (filters.keywords || []).length]
   ].filter(([, count]) => count > 0);
 
   $('#filterSummary').textContent = rows.length

@@ -49,7 +49,7 @@
           href,
           title: U.normalizeText(anchor.getAttribute('title') || (strong ? strong.textContent : '')),
           time: U.normalizeText(small ? small.textContent : ''),
-          num: Number.isFinite(number) && number > 0 ? number : null,
+          num: Number.isFinite(number) && number >= 0 ? number : null,
           locked
         });
       }

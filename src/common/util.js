@@ -85,6 +85,26 @@
     return 'other';
   }
 
+  /** Does one block-list entry refer to this book? Entries may be an id, a
+   *  slug, "/book/<slug>_<id>" or a full URL. Compare ids exactly. */
+  function bookEntryMatches(entry, id, slug) {
+    const value = String(entry || '').trim().toLowerCase();
+    if (!value) return false;
+    const ref = bookRefFromHref(value);
+    if (ref) return Boolean(id && ref.id === id) || Boolean(slug && ref.slug === slug);
+    const idMatch = value.match(/\d{6,}/);
+    if (idMatch) return Boolean(id) && idMatch[0] === id;
+    return Boolean(slug) && (value === slug || value.replace(/^\/book\//, '') === slug);
+  }
+
+  function listHasBook(list, id, slug) {
+    return (list || []).some((entry) => bookEntryMatches(entry, id, slug));
+  }
+
+  function removeBookFromList(list, id, slug) {
+    return (list || []).filter((entry) => !bookEntryMatches(entry, id, slug));
+  }
+
   function unique(list) {
     return Array.from(new Set(list));
   }
@@ -122,6 +142,9 @@
     isChapterHref,
     pageType,
     unique,
+    bookEntryMatches,
+    listHasBook,
+    removeBookFromList,
     clamp,
     isTypingTarget,
     escapeHtml,

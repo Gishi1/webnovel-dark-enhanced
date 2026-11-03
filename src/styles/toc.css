@@ -400,7 +400,7 @@ html[data-wne-theme] .wne-toc {
   border: 1px solid var(--toc-accent);
   background: var(--toc-accent);
   color: #0b0d12;
-  font: 600 12.5px/1.4 inherit;
+  font-weight: 600; font-size: 12.5px; line-height: 1.4; font-family: inherit;
   cursor: pointer;
 }
 

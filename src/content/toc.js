@@ -19,7 +19,8 @@
   const isReader = () => U.pageType() === 'reader';
 
   function currentBookId() {
-    const match = location.pathname.match(/^\/book\/[^/]+_(\d+)\//);
+    // Both /book/<slug>_<id>/... and canonical /book/<id>/... URLs.
+    const match = location.pathname.match(/^\/book\/(?:[^/]+_)?(\d+)(?:\/|$)/);
     return match ? match[1] : null;
   }
 
@@ -227,7 +228,12 @@
 
     if (currentEl) {
       requestAnimationFrame(() => {
-        const top = currentEl.offsetTop - body.clientHeight / 2 + currentEl.offsetHeight / 2;
+        const top =
+          currentEl.getBoundingClientRect().top -
+          body.getBoundingClientRect().top +
+          body.scrollTop -
+          body.clientHeight / 2 +
+          currentEl.offsetHeight / 2;
         body.scrollTop = Math.max(0, top);
       });
     } else {
@@ -249,11 +255,9 @@
     let matches = 0;
 
     for (const entry of index) {
-      const hit =
-        !needle ||
-        entry.title.indexOf(needle) !== -1 ||
-        entry.num.indexOf(needle) === 0 ||
-        entry.num === needle;
+      // Numeric queries match an exact chapter number; text matches titles.
+      const numeric = /^\d+$/.test(needle);
+      const hit = !needle || (numeric ? entry.num === needle : entry.title.indexOf(needle) !== -1);
       entry.li.hidden = !hit;
       if (hit) {
         matches += 1;

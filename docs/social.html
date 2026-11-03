@@ -1,0 +1,38 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 1280px; height: 640px; overflow: hidden; }
+  body { font-family: "Nunito Sans", system-ui, -apple-system, "Segoe UI", sans-serif; background: #080b11; color: #e9ecf4; }
+  .card { position: relative; width: 1280px; height: 640px; overflow: hidden; display: flex; align-items: center; gap: 44px; padding: 0 72px; }
+  .bg { position: absolute; inset: 0; background:
+      radial-gradient(900px 520px at 6% -5%, rgba(107,147,255,.30), transparent 60%),
+      radial-gradient(760px 460px at 96% 115%, rgba(45,212,191,.22), transparent 60%),
+      linear-gradient(135deg, #0a0e17 0%, #0e1420 55%, #090d14 100%); }
+  .grid { position: absolute; inset: 0; opacity: .16;
+    background-image: linear-gradient(rgba(255,255,255,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.07) 1px, transparent 1px);
+    background-size: 46px 46px; mask-image: radial-gradient(900px 600px at 25% 40%, #000 30%, transparent 78%); }
+  .left { position: relative; z-index: 2; width: 600px; }
+  .logo { width: 104px; height: 104px; border-radius: 26px; background: #0e1118; border: 1px solid #2a3142; display: grid; place-items: center; box-shadow: 0 22px 50px rgba(0,0,0,.55); margin-bottom: 26px; }
+  .eyebrow { font-size: 12px; letter-spacing: .24em; font-weight: 800; color: #8fa3c8; text-transform: uppercase; }
+  h1 { margin: 10px 0 14px; font-size: 58px; line-height: 1.02; letter-spacing: -.025em; font-weight: 800; }
+  h1 span { background: linear-gradient(90deg, #8db1ff, #2dd4bf); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  p { margin: 0; font-size: 19px; line-height: 1.5; color: #aab4c8; max-width: 540px; }
+  .meta { margin-top: 24px; display: flex; align-items: center; gap: 12px; font-size: 14px; color: #77829a; }
+  .dot { width: 4px; height: 4px; border-radius: 50%; background: #3a4358; }
+  .kofi { color: #ffb3c1; font-weight: 700; }
+  .shot { position: relative; z-index: 2; width: 470px; height: 520px; border-radius: 18px; overflow: hidden; border: 1px solid #2b3346; box-shadow: 0 36px 80px rgba(0,0,0,.65); transform: rotate(-1deg); flex: none; }
+  .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+</style></head>
+<body>
+  <div class="card">
+    <div class="bg"></div><div class="grid"></div>
+    <div class="left">
+      <div class="logo"><svg viewBox="0 0 64 64" width="70" height="70"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6b93ff"/><stop offset="1" stop-color="#2dd4bf"/></linearGradient></defs><rect x="1" y="1" width="62" height="62" rx="14" fill="#0e1118"/><path d="M13 16h15a6 6 0 0 1 6 6v27a5 5 0 0 0-5-5H13z" fill="url(#g)"/><path d="M51 16H36a6 6 0 0 0-6 6v27a5 5 0 0 1 5-5h16z" fill="url(#g)" opacity=".62"/><path d="M32 19.5v28" stroke="#0e1118" stroke-width="3.2"/></svg></div>
+      <div class="eyebrow">Chrome extension · Manifest V3</div>
+      <h1>WebNovel<br><span>Dark &amp; Enhanced</span></h1>
+      <p>Dark theme, card listings, tag / book / author filters and a reader with a searchable table of contents.</p>
+      <div class="meta"><span>No tracking</span><span class="dot"></span><span>Open source</span><span class="dot"></span><span class="kofi">ko-fi.com/gishi</span></div>
+    </div>
+    <div class="shot"><img src="screenshots/listing-dark.png" alt=""></div>
+  </div>
+</body></html>

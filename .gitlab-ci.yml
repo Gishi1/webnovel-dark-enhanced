@@ -1,0 +1,13 @@
+stages:
+  - checks
+
+syntax:
+  stage: checks
+  image: node:20
+  script:
+    - find src tools -name '*.js' -o -name '*.mjs' | xargs -n1 node --check
+    - >
+      node -e "const fs=require('fs');const m=require('./manifest.json');
+      if(m.manifest_version!==3) throw new Error('manifest_version');
+      for(const p of Object.values(m.icons)) if(!fs.existsSync(p)) throw new Error('missing '+p);
+      console.log('manifest ok, version', m.version);"

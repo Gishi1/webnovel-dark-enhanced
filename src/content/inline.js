@@ -48,7 +48,7 @@
   function currentBookBlocked() {
     const id = bookId();
     if (!id) return false;
-    return normalizeList(settings.filters.blockBooks).some((entry) => entry.includes(id));
+    return U.listHasBook(settings.filters.blockBooks, id, '');
   }
 
   function tagActionScope(anchor) {
@@ -98,8 +98,8 @@
 
   async function toggleTag(tag, list) {
     const current = settings.filters;
-    const hide = current.hideTags.slice();
-    const prefer = current.preferTags.slice();
+    const hide = (current.hideTags || []).slice();
+    const prefer = (current.preferTags || []).slice();
     const inHide = normalizeList(hide).includes(tag);
     const inPrefer = normalizeList(prefer).includes(tag);
 
@@ -241,15 +241,15 @@
   async function toggleAuthor(author, link) {
     const current = settings.filters;
     const blocked = normalizeList(current.blockAuthors).includes(author.toLowerCase());
-    let authors = current.blockAuthors.filter((name) => String(name).toLowerCase() !== author.toLowerCase());
-    let books = current.blockBooks.slice();
+    let authors = (current.blockAuthors || []).filter((name) => String(name).toLowerCase() !== author.toLowerCase());
+    let books = (current.blockBooks || []).slice();
     const id = bookId();
 
     if (!blocked) {
       authors = authors.concat(author);
       // Their books carry no author in listings, so make the block effective now
       // by also hiding the book the user blocked them from.
-      if (id && !normalizeList(books).some((entry) => entry.includes(id))) books.push(id);
+      if (id && !U.listHasBook(books, id, '')) books.push(id);
     }
 
     await WNE.settings.save({ filters: { blockAuthors: authors, blockBooks: books } });
@@ -260,10 +260,10 @@
     const id = bookId();
     if (!id) return;
     const current = settings.filters;
-    const blocked = normalizeList(current.blockBooks).some((entry) => entry.includes(id));
+    const blocked = U.listHasBook(current.blockBooks, id, '');
     const books = blocked
-      ? current.blockBooks.filter((entry) => !String(entry).includes(id))
-      : current.blockBooks.concat(id);
+      ? U.removeBookFromList(current.blockBooks, id, '')
+      : (current.blockBooks || []).concat(id);
     await WNE.settings.save({ filters: { blockBooks: books } });
     toast(blocked ? 'Book unblocked' : 'Book hidden from listings');
   }
@@ -280,9 +280,10 @@
         button = document.createElement('button');
         button.type = 'button';
         button.className = 'wne-author-btn wne-ui';
-        button.addEventListener('click', () => toggleAuthor(author, authorLink));
+        button.addEventListener('click', () => toggleAuthor(button.dataset.author, authorLink));
         authorLink.insertAdjacentElement('afterend', button);
       }
+      if (button.dataset.author !== author) button.dataset.author = author;
       const label = blocked ? 'Unblock author' : 'Block author';
       if (button.textContent !== label) button.textContent = label;
       button.classList.toggle('is-active', blocked);

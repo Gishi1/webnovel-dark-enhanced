@@ -185,22 +185,15 @@
   }
 
   function isBookBlocked(info) {
-    const list = (WNE.settings.get().filters.blockBooks || []).map((entry) => String(entry).toLowerCase());
-    return list.some((entry) => entry.includes(info.id) || entry.includes(info.slug));
+    return U.listHasBook(WNE.settings.get().filters.blockBooks, info.id, info.slug);
   }
 
   function toggleBlockedBook(info) {
     const current = WNE.settings.get();
     const list = current.filters.blockBooks || [];
-    const blocked = list.some((entry) => {
-      const value = String(entry).toLowerCase();
-      return value.includes(info.id) || value.includes(info.slug);
-    });
+    const blocked = U.listHasBook(list, info.id, info.slug);
     const next = blocked
-      ? list.filter((entry) => {
-          const value = String(entry).toLowerCase();
-          return !value.includes(info.id) && !value.includes(info.slug);
-        })
+      ? U.removeBookFromList(list, info.id, info.slug)
       : list.concat(info.id);
     WNE.settings.save({ filters: { blockBooks: next } });
   }
@@ -306,9 +299,9 @@
 
     const filters = settings.filters;
     const configured =
-      filters.hideTags.length +
-      filters.blockBooks.length +
-      filters.keywords.length +
+      (filters.hideTags || []).length +
+      (filters.blockBooks || []).length +
+      (filters.keywords || []).length +
       (Number(settings.listing.minRating) || 0);
     const text = filterBar.querySelector('.wne-filterbar__text');
     const idle = !configured && hidden === 0;
@@ -411,7 +404,7 @@
         '<button type="button" class="wne-notice__btn">Unblock</button>';
       notice.querySelector('button').addEventListener('click', () => {
         const current = WNE.settings.get();
-        const rest = current.filters.blockAuthors.filter((name) => name.toLowerCase() !== author);
+        const rest = current.filters.blockAuthors.filter((name) => String(name).toLowerCase() !== author);
         WNE.settings.save({ filters: { blockAuthors: rest } });
       });
     }

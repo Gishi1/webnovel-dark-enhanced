@@ -249,7 +249,7 @@ input[type="range"] {
   border-radius: 6px;
   background: transparent;
   color: var(--text-dim);
-  font: 600 12.5px/1.4 inherit;
+  font-weight: 600; font-size: 12.5px; line-height: 1.4; font-family: inherit;
   cursor: pointer;
 }
 
@@ -437,7 +437,7 @@ input[type="range"] {
   border: 1px solid var(--border);
   background: var(--surface-2);
   color: var(--text);
-  font: 600 12.5px/1.4 inherit;
+  font-weight: 600; font-size: 12.5px; line-height: 1.4; font-family: inherit;
   cursor: pointer;
 }
 
