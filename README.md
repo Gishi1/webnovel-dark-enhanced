@@ -42,7 +42,9 @@ Rules run locally on every listing; nothing leaves the browser.
 - Block authors (book pages).
 - Hide descriptions containing keywords.
 - Minimum rating.
-- Filtered books are either dimmed or removed; a summary bar shows the count and can reveal them again.
+- Filtered books are either dimmed or removed. The filter bar's **Remove filtered / Dim filtered** button
+  toggles between the two (persisted), and **Show all** reveals whichever is hidden. The toolbar popup has
+  the same toggle.
 - **On-site controls** (no options page needed):
   - Click any tag chip on a listing card or a book page for a menu with **Hide this tag**, **Prefer this tag** and **Open tag page**.
   - Tag pages (`/tags/<tag>`) get **Hide / Prefer** buttons under the title.

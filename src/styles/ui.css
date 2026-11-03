@@ -40,6 +40,12 @@
   border-color: var(--wn-accent, #6b93ff);
 }
 
+.wne-filterbar__btn.is-active {
+  border-color: var(--wn-accent, #6b93ff);
+  background: var(--wn-accent-soft, rgba(107, 147, 255, 0.14));
+  color: var(--wn-accent-strong, #9db8ff);
+}
+
 .wne-filterbar__btn--ghost {
   background: transparent;
   color: var(--wn-muted, #868da0);

@@ -40,6 +40,7 @@ function render(settings) {
   for (const input of $$('[data-path]')) {
     input.checked = Boolean(getPath(settings, input.dataset.path));
   }
+  $('#removeFiltered').checked = settings.listing.hideMode === 'hide';
 
   const filters = settings.filters;
   const rows = [
@@ -108,6 +109,10 @@ async function init() {
       WNE.settings.save(patchFor(input.dataset.path, input.checked));
     });
   }
+
+  $('#removeFiltered').addEventListener('change', (event) => {
+    WNE.settings.save({ listing: { hideMode: event.target.checked ? 'hide' : 'dim' } });
+  });
 
   $('#openFilters').addEventListener('click', () => {
     chrome.tabs.create({ url: chrome.runtime.getURL('src/options/options.html#filters') });

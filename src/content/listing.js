@@ -284,12 +284,17 @@
       filterBar.className = 'wne-filterbar wne-ui';
       filterBar.innerHTML =
         '<span class="wne-filterbar__text"></span>' +
+        '<button type="button" class="wne-filterbar__btn" data-wne-remove>Remove filtered</button>' +
         '<button type="button" class="wne-filterbar__btn" data-wne-reveal>Show all</button>' +
         '<button type="button" class="wne-filterbar__btn wne-filterbar__btn--ghost" data-wne-settings>Filters</button>';
       filterBar.querySelector('[data-wne-reveal]').addEventListener('click', (event) => {
         const root = document.documentElement;
         const revealed = root.classList.toggle('wne-reveal');
         event.currentTarget.textContent = revealed ? 'Hide filtered' : 'Show all';
+      });
+      filterBar.querySelector('[data-wne-remove]').addEventListener('click', () => {
+        const hide = WNE.settings.get().listing.hideMode === 'hide';
+        WNE.settings.save({ listing: { hideMode: hide ? 'dim' : 'hide' } });
       });
       filterBar.querySelector('[data-wne-settings]').addEventListener('click', () => {
         chrome.runtime.sendMessage({ type: 'wne:open-options' });
@@ -314,6 +319,19 @@
     const state = idle ? 'idle' : hidden ? 'active' : 'empty';
     if (filterBar.dataset.state !== state) filterBar.dataset.state = state;
     filterBar.querySelector('[data-wne-reveal]').hidden = hidden === 0;
+
+    const removeBtn = filterBar.querySelector('[data-wne-remove]');
+    const hideMode = settings.listing.hideMode === 'hide';
+    removeBtn.classList.toggle('is-active', hideMode);
+    const removeLabel = hideMode ? 'Dim filtered' : 'Remove filtered';
+    if (removeBtn.textContent !== removeLabel) removeBtn.textContent = removeLabel;
+    const removeTitle = hideMode
+      ? 'Stop removing filtered books (dim them instead)'
+      : 'Remove filtered books from this list';
+    if (removeBtn.title !== removeTitle) {
+      removeBtn.title = removeTitle;
+      removeBtn.setAttribute('aria-pressed', String(hideMode));
+    }
   }
 
   function apply(next) {
