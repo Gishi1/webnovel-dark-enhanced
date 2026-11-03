@@ -350,6 +350,22 @@ html[data-wne-theme] .rank-tag {
   color: #3d1400 !important;
 }
 
+/* Catalogue page zebra: the site paints every 4th pair of chapter rows
+   near-white (#fbfbfd) while our text stays light. Keep the striping, dark. */
+html[data-wne-theme] .content-list > li {
+  background-color: transparent !important;
+}
+
+/* A neutral surface with a hover tint reads better than fighting the
+   site's per-cell zebra across two columns. */
+html[data-wne-theme] .content-list > li:hover {
+  background-color: var(--wn-surface) !important;
+}
+
+html[data-wne-theme] .content-list > li > a {
+  color: var(--wn-text) !important;
+}
+
 /* Star ratings (the site hardcodes a black fill for the star glyph). */
 html[data-wne-theme] .g_star path,
 html[data-wne-theme] .g_star_num path,

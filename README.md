@@ -49,6 +49,8 @@ Rules run locally on every listing; nothing leaves the browser.
 - Width (narrow / medium / wide / full), font family (serif / sans / system), font size and line height.
 - Justify text, hide paragraph-comment markers, thin reading-progress bar.
 - `←` / `→` navigate chapters, `+` / `−` change the font size.
+- The book page's **Table of Contents tab** (`/book/<id>/catalog`) no longer shows the site's near-white
+  zebra rows under light text; chapter rows are transparent with a hover tint.
 - **Searchable table of contents**: the site's own catalog dialog never leaves its loading spinner
   (verified for 30+ seconds, with and without the extension), so the reader button opens a dark,
   searchable chapter list with volume grouping, the current chapter marked, locked-chapter badges and
@@ -71,9 +73,9 @@ Rules run locally on every listing; nothing leaves the browser.
 | --- | --- |
 | ![Search](docs/screenshots/search-dark.png) | ![Reader](docs/screenshots/reader-dark.png) |
 
-| Table of contents |
-| --- |
-| ![Table of contents](docs/screenshots/toc-dark.png) |
+| Table of contents | Catalogue tab |
+| --- | --- |
+| ![Table of contents](docs/screenshots/toc-dark.png) | ![Catalogue](docs/screenshots/catalog-dark.png) |
 
 ## Install (unpacked)
 
