@@ -350,6 +350,35 @@ html[data-wne-theme] .rank-tag {
   color: #3d1400 !important;
 }
 
+/* Header search modal (injected on demand, so it escaped the surface list). */
+html[data-wne-theme] .g_search_modal .g_search_header,
+html[data-wne-theme] .g_search_modal .g_search_panel {
+  background-color: var(--wn-surface) !important;
+  border-color: var(--wn-border) !important;
+}
+
+html[data-wne-theme] .g_search_modal .g_search_header {
+  border-bottom: 1px solid var(--wn-border) !important;
+}
+
+html[data-wne-theme] .g_search_modal .g_search_panel {
+  box-shadow: var(--wn-shadow) !important;
+}
+
+html[data-wne-theme] .g_search_modal .g_search_result,
+html[data-wne-theme] .g_search_modal .g_search_default,
+html[data-wne-theme] .g_search_modal .g_search_pop {
+  background-color: transparent !important;
+}
+
+html[data-wne-theme] .g_search_modal .g_search_pop_list a {
+  color: var(--wn-text-dim) !important;
+}
+
+html[data-wne-theme] .g_search_modal .g_search_pop_list a:hover {
+  color: var(--wn-accent-strong) !important;
+}
+
 /* Catalogue page zebra: the site paints every 4th pair of chapter rows
    near-white (#fbfbfd) while our text stays light. Keep the striping, dark. */
 html[data-wne-theme] .content-list > li {

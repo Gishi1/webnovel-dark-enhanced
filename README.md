@@ -7,7 +7,7 @@
 **A Chrome extension that makes [webnovel.com](https://www.webnovel.com) comfortable to read.**
 Dark theme · card listings · tag, book and author filters · a reader with a searchable table of contents.
 
-![Version](https://img.shields.io/badge/version-1.3.0-6b93ff)
+![Version](https://img.shields.io/badge/version-1.3.1-6b93ff)
 ![Manifest V3](https://img.shields.io/badge/manifest-v3-2dd4bf)
 ![Chrome 111+](https://img.shields.io/badge/chrome-111%2B-blue)
 ![License MIT](https://img.shields.io/badge/license-MIT-green)

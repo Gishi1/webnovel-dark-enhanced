@@ -4,6 +4,12 @@ All notable changes to this project are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 and the project uses [Semantic Versioning](https://semver.org/).
 
+## [1.3.1] - 2026-11-03
+
+### Fixed
+- The header search modal (magnifier) now follows the dark theme. Its layout is injected on
+  demand and used hardcoded white backgrounds for the form bar and the suggestions panel.
+
 ## [1.3.0] - 2026-11-03
 
 ### Added

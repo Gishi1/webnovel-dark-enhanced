@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "WebNovel Dark & Enhanced",
   "short_name": "WebNovel+",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "A proper dark theme, a decluttered layout, book filters and a better reader for webnovel.com.",
   "author": "Gishi",
   "minimum_chrome_version": "111",
